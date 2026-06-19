@@ -1,0 +1,173 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+	@apply bg-black text-snow font-default;
+	@apply antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+@layer base {
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		/* Prevent orphans and widows */
+		orphans: 2;
+		widows: 2;
+
+		/* Try to keep words together when possible */
+		word-break: normal;
+		overflow-wrap: break-word;
+
+		/* Subtle improvement for line breaks */
+		text-wrap: pretty; /* Modern browsers only */
+	}
+
+	/* Style all h1 elements directly */
+	h1 {
+		color: #fff8e3;
+		font-family: var(--font-manrope);
+		font-size: clamp(2.15rem, 4vw, 5rem);
+		font-weight: 600;
+		line-height: 1.1;
+		letter-spacing: -0.009em;
+	}
+
+	/* Style all h2 elements directly */
+	h2 {
+		color: #fff8e3;
+		font-family: var(--font-manrope);
+		font-size: clamp(1.875rem, 6vw, 3.5rem); /* ~32px min, 64px max */
+		font-style: normal;
+		font-weight: 600;
+		line-height: 1.1; /* 100% */
+		letter-spacing: -0.007em;
+	}
+
+	/* Style all h3 elements directly */
+	h3 {
+		color: #fff8e3;
+		font-family: var(--font-manrope);
+		font-size: clamp(1.45rem, 4.5vw, 2.75rem); /* ~28px min, 48px max */
+		font-style: normal;
+		font-weight: 600;
+		line-height: 1.1; /* 110% */
+		letter-spacing: -0.0055em;
+	}
+
+	/* Style all h4 elements directly */
+	h4 {
+		color: #fff8e3;
+		font-family: var(--font-manrope);
+		font-size: clamp(1.25rem, 3.5vw, 2.25rem); /* ~24px min, 40px max */
+		font-style: normal;
+		font-weight: 600;
+		line-height: 1.1; /* 110% */
+		letter-spacing: -0.0045em;
+	}
+
+	/* Style all h5 elements directly */
+	h5 {
+		color: #fff8e3;
+		font-family: var(--font-manrope);
+		font-size: clamp(1.25rem, 2.5vw, 1.75rem); /* ~20px min, 32px max */
+		font-style: normal;
+		font-weight: 600;
+		line-height: 1.1; /* 120% */
+		letter-spacing: -0.0035em;
+	}
+
+	/* Style all h6 elements directly */
+	h6 {
+		color: #fff8e3;
+		font-family: var(--font-manrope);
+		font-size: clamp(1.125rem, 2vw, 1.5rem); /* ~18px min, 28px max */
+		font-style: normal;
+		font-weight: 600;
+		line-height: 1.1; /* 120% */
+		letter-spacing: -0.003em;
+	}
+
+	/* Typography utilities  */
+
+	.text-overline {
+		color: #fff8e3;
+		font-family: var(--font-manrope);
+		font-size: clamp(0.875rem, 1.5vw, 1rem); /* ~16px min, 20px max */
+		font-style: normal;
+		font-weight: 600;
+		line-height: 1.1;
+		letter-spacing: 0.06rem;
+		text-transform: uppercase;
+	}
+
+	.text-paragraph-sm {
+		color: #fff8e3;
+		font-family: var(--font-manrope);
+		font-size: clamp(0.875rem, 2vw, 0.875rem); /* ~20px min, 24px max */
+		font-style: normal;
+		font-weight: 400;
+		line-height: 1.4;
+	}
+
+	
+
+	.text-paragraph {
+		color: #fff8e3;
+		font-family: var(--font-manrope);
+		font-size: clamp(1rem, 2vw, 1rem); /* ~20px min, 24px max */
+		font-style: normal;
+		font-weight: 400;
+		line-height: 1.4;
+	}
+
+	.text-paragraph-lg {
+		color: #fff8e3;
+		font-family: var(--font-manrope);
+		font-size: clamp(1.125rem, 1.4vw, 1.5rem); /* ~20px min, 24px max */
+		font-style: normal;
+		font-weight: 400;
+		line-height: 1.4;
+	}
+
+
+
+	.text-button {
+		color: #fff8e3;
+		font-family: var(--font-manrope);
+		font-size: clamp(1rem, 1.35vw, 1.25rem); /* ~16px min, 20px max */
+		font-style: normal;
+		font-weight: 600;
+		line-height: 1;
+	}
+}
+
+html {
+	@apply scroll-smooth;
+}
+
+.max-container {
+	@apply max-w-[115rem] mx-auto px-1 md:px-2 xl:px-5
+}
+
+.dot-bg {
+	@apply bg-[radial-gradient(#BFBBAA_1px,_transparent_0px)] bg-[length:16px_16px];
+}
+
+.scrollbar-hide {
+	-ms-overflow-style: none; /* IE and Edge */
+	scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+	display: none; /* Chrome, Safari, Opera */
+}
+
+.no-scroll {
+	overflow: hidden !important;
+	height: 100% !important;
+}

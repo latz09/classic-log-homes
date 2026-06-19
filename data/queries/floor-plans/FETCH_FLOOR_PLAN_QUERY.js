@@ -1,0 +1,45 @@
+export const FETCH_FLOOR_PLAN_QUERY = `*[_type == "floorPlan" && slug.current == $slug][0]{
+  _id,
+  name,
+  "slug": slug.current,
+  category,
+  startingPrice,
+  shortDescription,
+  heroIntro,
+  specs{
+    squareFeet,
+    bedrooms,
+    bathrooms,
+    stories,
+    dimensions,
+    wallHeight
+  },
+  heroImage{
+    asset->{url},
+    hotspot
+  },
+  renderings[]{
+    asset->{url},
+    hotspot
+  },
+  blueprintImages[]{
+    image{
+      asset->{url},
+      hotspot
+    },
+    caption
+  },
+  about,
+  keyFeatures,
+  packageIncluded,
+  packageNotIncluded,
+  packageFootnote,
+  walkaroundUrl,
+  seo{
+    title,
+    description,
+    keywords,
+    "ogImage": ogImage.asset->url,
+    noIndex
+  }
+}`
