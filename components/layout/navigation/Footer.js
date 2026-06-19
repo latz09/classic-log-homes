@@ -1,33 +1,72 @@
 import Link from 'next/link';
 import Logo from '../../lib/Logo';
+import { fetchContent as fc } from '@/utils/cms/fetchContent';
+import { FETCH_SITE_SETTINGS_QUERY as Q } from '@/data/queries/settings/FETCH_SITE_SETTINGS_QUERY';
 
 const currentYear = new Date().getFullYear();
-const CLIENT_BUSINESS_NAME = 'Your Business Name';
 
-const Footer = () => {
+const Footer = async () => {
+	const data = await fc(Q);
+	const { footer, contact } = data || {};
+console.log(data.footer.tagline)
 	return (
-		<footer>
-			<div className='py-16 grid place-items-center '>
-				<Logo height={400} width={400} white />
+		<footer className='bg-[#131313] mt-5 lg:mt-10 pt-2.5 lg:pt-5'>
+			<div className='max-container space-y-1 lg:space-y-1.5'>
+				<div className=' grid place-items-center lg:place-items-start '>
+					<Logo height={400} width={400} white />
+				</div>
+
+				<div className='lg:flex lg:gap-[25rem] pb-2 lg:pb-4'>
+					<div className="ml-0 lg:ml-6 space-y-0.75 text-center lg:text-left">
+						{contact?.phone && (
+							<p>
+								<a href={`tel:${contact.phone}`}>{contact.phone}</a>
+							</p>
+						)}
+						{contact?.email && (
+							<p>
+								<a href={`mailto:${contact.email}`}>{contact.email}</a>
+							</p>
+						)}
+						{contact?.address && (
+							<p className='whitespace-pre-line'>{contact.address}</p>
+						)}
+						{contact?.showroomNote && <p>{contact.showroomNote}</p>}
+					</div>
+					<div className="flex flex-col justify-between items-center lg:items-start text-center lg:text-left">
+						<div className="flex gap-2 lg:gap-4 text-paragraph-lg font-[600] text-gold py-2 lg:py-0">
+							<p>About</p>
+							<p>Floor Plans</p>
+							<p>Contact</p>
+						</div>
+						<p>{footer?.tagline}</p>
+
+						
+					</div>
+
+					
+
+					{/* <p>{footer?.copyright}</p> */}
+				</div>
+				<CopyRight content={footer?.copyright}/>
 			</div>
-			<CopyRight />
 		</footer>
 	);
 };
 
 export default Footer;
 
-const CopyRight = () => {
+const CopyRight = ({ content }) => {
 	// Get the current year
 
 	return (
-		<div className='text-center pb-3 mt-2 px-2  grid gap-3 text-dark'>
-			<Link href='/legal/privacy-policy'>
+		<div className=' py-0.75 grid gap-3 text-dark border-t border-darkGold text-center lg:text-left'>
+			{/* <Link href='/legal/privacy-policy'>
 				<span className='text-xs font-semibold'>Privacy Policy</span>
-			</Link>
+			</Link> */}
 
-			<p>{`© ${currentYear} by ${CLIENT_BUSINESS_NAME}`}</p>
-			<PoweredBy />
+			<p>{`© ${currentYear} by ${content}`}</p>
+			{/* <PoweredBy /> */}
 		</div>
 	);
 };

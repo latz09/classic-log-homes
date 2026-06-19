@@ -6,7 +6,7 @@ const IMAGE = { width: 1360, height: 372, quality: 92 };
 
 const MillWork = ({ image, overline, heading, body }) => {
 	return (
-		<div className='overflow-hidden rounded bg-white'>
+		<div className='overflow-hidden rounded-lg bg-white'>
 			{image?.asset && (
 				<div
 					className='relative w-full'

@@ -119,7 +119,7 @@ const WhatYourBuying = ({ data }) => {
 
 			{image?.asset && (
 				<div
-					className='relative w-full overflow-hidden rounded'
+					className='relative w-full overflow-hidden rounded-lg'
 					style={{ aspectRatio: '2.16 / 1' }}
 				>
 					<SanityImage

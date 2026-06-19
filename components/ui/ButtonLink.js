@@ -72,7 +72,7 @@ export default function ButtonLink({
 	const isTertiary = variant.startsWith('tertiary');
 
 	const baseStyles =
-		'group relative overflow-hidden text-button inline-flex items-center justify-center rounded transition-all duration-400 ';
+		'group relative overflow-hidden text-button inline-flex items-center justify-center rounded-sm transition-all duration-400 ';
 
 	const combined = clsx(baseStyles, VARIANTS[variant], className);
 

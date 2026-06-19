@@ -133,7 +133,7 @@ const HeadingWithOverline = ({
 					{headingEl}
 				</div>
 				{(bodyEl || ctaEl) && (
-					<div className='space-y-6 lg:flex-1'>
+					<div className='space-y-1.25 lg:space-y-2.5 lg:flex-1'>
 						{bodyEl}
 						{ctaEl}
 					</div>

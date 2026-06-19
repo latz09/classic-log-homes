@@ -57,6 +57,7 @@ export function getResponsiveImageUrls(image, breakpoints = {}) {
 export const IMAGE_PRESETS = {
 	whatYourBuying: { width: 1360, height: 630, quality: 90 }, // ~2.16:1
 	millwork: { width: 1360, height: 372, quality: 90 }, // ~3.65:1, native-width, higher q
+	support: { width: 1188, height: 1024, quality: 90 }, // 297:256 aspect ratio
 	// template presests
 	hero: { width: 1920, height: 1080, quality: 90 },
 	card: { width: 400, height: 300, quality: 85 },

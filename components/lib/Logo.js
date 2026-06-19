@@ -12,6 +12,7 @@ const Logo = ({ height, width, url, white = false }) => {
                     alt='logo'
                     width={width}
                     height={height}
+                    
                 />
             </div>
         </Link>
