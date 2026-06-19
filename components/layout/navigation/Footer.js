@@ -8,15 +8,15 @@ const currentYear = new Date().getFullYear();
 const Footer = async () => {
 	const data = await fc(Q);
 	const { footer, contact } = data || {};
-console.log(data.footer.tagline)
+
 	return (
 		<footer className='bg-[#131313] mt-5 lg:mt-10 pt-2.5 lg:pt-5'>
 			<div className='max-container space-y-1 lg:space-y-1.5'>
 				<div className=' grid place-items-center lg:place-items-start '>
-					<Logo height={400} width={400} white />
+					<Logo className="w-[16rem] lg:w-[20rem] h-auto" white />
 				</div>
 
-				<div className='lg:flex lg:gap-[25rem] pb-2 lg:pb-4'>
+				<div className='lg:flex lg:gap-[25rem] pb-2 lg:pb-4 pt-1 lg:pt-0'>
 					<div className="ml-0 lg:ml-6 space-y-0.75 text-center lg:text-left">
 						{contact?.phone && (
 							<p>
