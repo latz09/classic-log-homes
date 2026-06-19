@@ -14,6 +14,7 @@ import Support from '@/components/sections/home-page/Support';
 import Reviews from '@/components/sections/shared/Reviews';
 import ContactSection from '@/components/sections/shared/ContactSection';
 import MillWork from '@/components/sections/home-page/MillWork';
+import LandingHeroMobile from '@/components/sections/home-page/LandingHeroMobile';
 
 export async function generateMetadata() {
 	return await BPM({ slug: '/', query: Q });
@@ -33,17 +34,35 @@ export default async function Home() {
 	} = data;
 	return (
 		<PageContainer>
-			<LandingHero data={hero}>
-				<NavigationContainer />
-			</LandingHero>
+			<div className='hidden lg:block'>
+				<LandingHero data={hero}>
+					<NavigationContainer />
+				</LandingHero>
+			</div>
+
+			{/* below lg — stacked 50/50 hero */}
+			<div className='lg:hidden'>
+				<LandingHeroMobile data={hero}>
+					<NavigationContainer />
+				</LandingHeroMobile>
+			</div>
 
 			{/* Pull the pillars up onto the hero's bottom apron */}
-			<div className='max-container relative z-20 -mt-[4vh] 3xl:-mt-[5vh] space-y-5 lg:space-y-10'>
+			<div className='max-container relative z-20 -mt-[5vh] 3xl:-mt-[5vh] space-y-5 lg:space-y-10'>
 				<Pillars data={pillars} />
 				<WhatYourBuying data={whatYoureBuying} />
 				<FeaturedPlans data={featuredPlans} />
-				<Process overline={process.overline} heading={process.heading} steps={process.steps} />
-				<MillWork image={process.millImage} overline={process.builtOverline} heading={process.builtHeading} body={process.builtBody} />
+				<Process
+					overline={process.overline}
+					heading={process.heading}
+					steps={process.steps}
+				/>
+				<MillWork
+					image={process.millImage}
+					overline={process.builtOverline}
+					heading={process.builtHeading}
+					body={process.builtBody}
+				/>
 				<Support data={support} />
 				<Reviews data={reviews} />
 				<ContactSection data={contact} />
