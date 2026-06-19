@@ -28,7 +28,7 @@ const LandingHeroMobile = ({ data, children }) => {
 
 			{/* BOTTOM 50% — content on solid black */}
 			<div className='max-container relative z-10 flex h-[50vh] flex-col justify-center bg-black pb-4 pt-0 text-white'>
-				<div className='space-y-2'>
+				<div className='space-y-1'>
 					<h1>
 						{headlineLines.map((line, i) => (
 							<span key={i} className='block'>
