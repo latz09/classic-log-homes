@@ -15,7 +15,7 @@ import Reviews from '@/components/sections/shared/Reviews';
 import ContactSection from '@/components/sections/shared/ContactSection';
 import MillWork from '@/components/sections/home-page/MillWork';
 import LandingHeroMobile from '@/components/sections/home-page/LandingHeroMobile';
-import ScrollToHash from '@/components/hooks/ScrollToHash';
+
 
 export async function generateMetadata() {
 	return await BPM({ slug: '/', query: Q });

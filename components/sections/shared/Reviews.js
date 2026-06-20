@@ -9,11 +9,13 @@ const Reviews = ({ data }) => {
 	if (!testimonials?.length) return null;
 
 	return (
-		<ReviewCarousel
-			overline={overline}
-			heading={heading}
-			items={testimonials}
-		/>
+		<div id='reviews' className='scroll-mt-1.5 lg:scroll-mt-3'>
+			<ReviewCarousel
+				overline={overline}
+				heading={heading}
+				items={testimonials}
+			/>
+		</div>
 	);
 };
 
@@ -68,7 +70,12 @@ const ReviewCarousel = ({ overline, heading, items }) => {
 		<div className='space-y-2'>
 			<div className='flex items-end justify-between gap-1 lg:gap-2'>
 				<HeadingWithOverline overline={overline} heading={heading} />
-				<Arrows onPrev={prev} onNext={next} canPrev={canPrev} canNext={canNext} />
+				<Arrows
+					onPrev={prev}
+					onNext={next}
+					canPrev={canPrev}
+					canNext={canNext}
+				/>
 			</div>
 
 			<div ref={containerRef} className='overflow-hidden'>
@@ -93,7 +100,8 @@ const ReviewCarousel = ({ overline, heading, items }) => {
 };
 
 const ReviewCard = ({ data }) => {
-	const { quote, customerName, projectLocation, rating, audienceType } = data || {};
+	const { quote, customerName, projectLocation, rating, audienceType } =
+		data || {};
 
 	return (
 		<div className='shrink-0 basis-[87%] sm:basis-[47%] lg:basis-[30%] p-1 lg:p-1.25 bg-white/10 border rounded select-none space-y-2'>
@@ -151,7 +159,13 @@ const Arrows = ({ onPrev, onNext, canPrev, canNext }) => {
 					fill='none'
 					draggable={false}
 				>
-					<circle cx='28' cy='28' r='28' transform='rotate(-180 28 28)' fill='#FFF8E3' />
+					<circle
+						cx='28'
+						cy='28'
+						r='28'
+						transform='rotate(-180 28 28)'
+						fill='#FFF8E3'
+					/>
 					<path
 						d='M26 18L15.5 28.5L26 39M15.5 28.5L40 28.5'
 						stroke='#1E1E1E'
