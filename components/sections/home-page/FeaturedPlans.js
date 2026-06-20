@@ -10,7 +10,7 @@ const FeaturedPlans = ({ data }) => {
 		: [];
 
 	return (
-		<div className='space-y-2 lg:space-y-4'>
+		<div id='floor-plans' className='space-y-2 lg:space-y-4 scroll-mt-1.5 lg:scroll-mt-3'>
 			<HeadingWithOverline
 				flexed
 				overline={overline}

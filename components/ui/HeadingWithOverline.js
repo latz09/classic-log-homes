@@ -11,6 +11,9 @@ import ButtonLink from './ButtonLink'; // adjust path to wherever ButtonLink liv
  *   body       - paragraph text from Sanity; a string OR an array of strings.
  *                Either is normalized to spaced paragraphs automatically.
  *   flexed     - true = heading left / body (+cta) right, stacks on mobile
+ *   bodyAlign  - 'start' (default) | 'end'. Flexed only. 'end' drops the body
+ *                column to the bottom so its baseline aligns with the bottom
+ *                of the heading column. No effect on stacked/centered layouts.
  *   cta        - object: { label, href, variant?, external?, event? }
  *                Renders a <ButtonLink> under the body (flexed only).
  *                variant defaults based on `secondary` if omitted.
@@ -60,6 +63,15 @@ import ButtonLink from './ButtonLink'; // adjust path to wherever ButtonLink liv
  *     'The mill produces. Jeff coordinates. You get one direct line from quote to delivery.',
  *   ]}
  * />
+ *
+ * // Image 6 — flexed + body pinned to the bottom of the row
+ * <HeadingWithOverline
+ *   flexed
+ *   bodyAlign="end"
+ *   overline="WHAT'S INCLUDED"
+ *   heading="What's included in the Starter Package"
+ *   body="Everything you need to go live..."
+ * />
  */
 
 const HeadingWithOverline = ({
@@ -69,6 +81,7 @@ const HeadingWithOverline = ({
 	secondary = false,
 	body,
 	flexed = false,
+	bodyAlign = 'start',
 	cta,
 	centered = false,
 	tightGap = false,
@@ -133,7 +146,11 @@ const HeadingWithOverline = ({
 					{headingEl}
 				</div>
 				{(bodyEl || ctaEl) && (
-					<div className='space-y-1.25 lg:space-y-2.5 lg:flex-1'>
+					<div
+						className={`space-y-1.25 lg:space-y-2.5 lg:flex-1 ${
+							bodyAlign === 'end' ? 'lg:self-end' : ''
+						}`}
+					>
 						{bodyEl}
 						{ctaEl}
 					</div>

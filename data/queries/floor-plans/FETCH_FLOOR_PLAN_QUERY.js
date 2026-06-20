@@ -35,6 +35,15 @@ export const FETCH_FLOOR_PLAN_QUERY = `*[_type == "floorPlan" && slug.current ==
   packageNotIncluded,
   packageFootnote,
   walkaroundUrl,
+  "contact": *[_type == "homePage" && _id == "homePage"][0].contact{
+    overline,
+    heading,
+    body,
+    phone,
+    availability,
+    formHeading,
+    formNote
+  },
   seo{
     title,
     description,

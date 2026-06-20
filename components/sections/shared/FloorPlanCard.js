@@ -48,7 +48,7 @@ const FloorPlanCard = ({ data }) => {
 			<div className='space-y-0.5 lg:space-y-1 mr-1'>
 				<p className='text-overline text-gold'>{category}</p>
 				<h4>{name}</h4>
-				<p className='text-paragraph-lg uppercase'>{startingPrice}</p>
+				<p className='text-paragraph-lg '>Starting at {startingPrice}</p>
 
 				<div className='flex items-end gap-2'>
 					{specItems.map((spec, i) => (

@@ -2,7 +2,7 @@ import HeadingWithOverline from '@/components/ui/HeadingWithOverline';
 
 const Process = ({ overline, heading, steps }) => {
 	return (
-		<div className="space-y-2 lg:space-y-4">
+		<div id='how-it-works' className="space-y-2 lg:space-y-4 scroll-mt-1.5 lg:scroll-mt-3">
 			<HeadingWithOverline centered overline={overline} heading={heading} />
 			<div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-2.25">
 				{steps.map((step, index) => (

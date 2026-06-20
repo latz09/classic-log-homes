@@ -17,7 +17,7 @@ const DesktopNavbar = ({ navLinks, logoUrl }) => {
 
     return (
         <div className='hidden lg:flex items-center  w-full'>
-            <Logo className="w-[15rem] h-auto" url={logoUrl} />
+            <Logo className="w-[13rem] h-auto" url={logoUrl} />
             <nav className='flex gap-1.75 items-center ml-auto'>
                 {mainLinks.map((link, index) => (
                     <Link
@@ -33,7 +33,7 @@ const DesktopNavbar = ({ navLinks, logoUrl }) => {
                     <Link
                         href={contactLink.url}
                         onClick={() => handleNavClick(contactLink.label, contactLink.url)}
-                        className='block text-paragraph-lg font-[600] transition-all duration-200 cursor-pointer bg-black text-white hover:bg-primary/75 px-1.25 py-0.75 rounded'
+                        className='block text-paragraph-lg font-[600] transition-all duration-200 cursor-pointer bg-black text-white hover:bg-white/75 hover:text-black border border-black/0  hover:border-black px-1.25 py-0.75 rounded'
                     >
                         {contactLink.label}
                     </Link>

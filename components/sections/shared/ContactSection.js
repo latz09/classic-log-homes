@@ -12,7 +12,7 @@ const ContactSection = ({ data }) => {
 	} = data;
 
 	return (
-		<div className='grid lg:grid-cols-2 gap-1.75 lg:gap-3.5'>
+		<div id='contact' className='grid lg:grid-cols-2 gap-1.75 lg:gap-3.5 scroll-mt-1.5 lg:scroll-mt-3'>
 			<div>
 				<HeadingWithOverline
 					overline={overline}

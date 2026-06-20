@@ -10,6 +10,7 @@ import NavigationContainer from '@/components/layout/navigation/NavigationContai
 import './globals.css';
 import { Manrope } from 'next/font/google';
 import DesignSystemBadge from '@/components/design/DesignSystemBadge';
+import ScrollToHash from '@/components/hooks/ScrollToHash';
 
 const manrope = Manrope({
 	subsets: ['latin'],
@@ -57,6 +58,7 @@ export default async function RootLayout({ children }) {
 	return (
 		<html lang='en'>
 			<body className={`min-h-screen ${manrope.variable}`}>
+					<ScrollToHash />
 				{schema && <JsonLd data={schema} />}
 				{/* <NavigationContainer /> */}
 				{children}

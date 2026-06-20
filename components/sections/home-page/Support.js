@@ -23,7 +23,7 @@ const Support = ({ data }) => {
 				overline={overline}
 				heading={heading}
 				body={intro}
-				cta={{ ...cta, href: '/contact' }}
+				cta={{ ...cta, href: '#contact' }}
 			/>
 			<div className="grid lg:grid-cols-2 gap-2.5 lg:gap-5">
 				<div className="space-y-1 lg:space-y-1.75">
