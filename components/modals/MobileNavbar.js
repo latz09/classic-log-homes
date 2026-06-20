@@ -104,7 +104,7 @@ const MobileNavbar = ({ navLinks = [], variant, logoUrl }) => {
 
 								{/* Menu Panel */}
 								<motion.nav
-									className='fixed top-0 right-0 h-full w-[90%] max-w-[400px] bg-black z-[100] shadow-lifted'
+									className='fixed top-0 right-0 h-full w-[83%] max-w-[400px] bg-black z-[100] shadow-lifted'
 									variants={menuVariants}
 									initial='closed'
 									animate='open'
