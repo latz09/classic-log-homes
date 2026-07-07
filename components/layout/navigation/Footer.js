@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Logo from '../../lib/Logo';
 import { fetchContent as fc } from '@/utils/cms/fetchContent';
 import { FETCH_SITE_SETTINGS_QUERY as Q } from '@/data/queries/settings/FETCH_SITE_SETTINGS_QUERY';
+import LogGraphic from '@/components/ui/graphics/LogGraphic';
 
 const currentYear = new Date().getFullYear();
 
@@ -10,14 +11,18 @@ const Footer = async () => {
 	const { footer, contact } = data || {};
 
 	return (
-		<footer className='bg-[#131313] mt-5 lg:mt-10 pt-2.5 lg:pt-5'>
+		<footer className='relative overflow-hidden bg-[#131313] mt-5 lg:mt-10 pt-2.5 lg:pt-5'>
+			<LogGraphic
+				variant='large'
+				className='inset-0 w-full h-full z-0 opacity-10'
+			/>
 			<div className='max-container space-y-1 lg:space-y-1.5'>
 				<div className=' grid place-items-center lg:place-items-start '>
-					<Logo className="w-[16rem] lg:w-[20rem] h-auto" white />
+					<Logo className='w-[16rem] lg:w-[20rem] h-auto' white />
 				</div>
 
 				<div className='lg:flex lg:gap-[25rem] pb-2 lg:pb-4 pt-1 lg:pt-0'>
-					<div className="ml-0 lg:ml-6 space-y-0.75 text-center lg:text-left">
+					<div className='ml-0 lg:ml-6 space-y-0.75 text-center lg:text-left'>
 						{contact?.phone && (
 							<p>
 								<a href={`tel:${contact.phone}`}>{contact.phone}</a>
@@ -33,22 +38,18 @@ const Footer = async () => {
 						)}
 						{contact?.showroomNote && <p>{contact.showroomNote}</p>}
 					</div>
-					<div className="flex flex-col justify-between items-center lg:items-start text-center lg:text-left">
-						<div className="flex gap-2 lg:gap-4 text-paragraph-lg font-[600] text-gold py-2 lg:py-0">
-							<p>About</p>
-							<p>Floor Plans</p>
-							<p>Contact</p>
+					<div className='flex flex-col justify-between items-center lg:items-start text-center lg:text-left'>
+						<div className='flex gap-2 lg:gap-4 text-paragraph-lg font-[600] text-gold py-2 lg:py-0'>
+							<Link href='/#how-it-works'>About</Link>
+							<Link href='/#floor-plans'>Floor Plans</Link>
+							<Link href='/#contact'>Contact</Link>
 						</div>
 						<p>{footer?.tagline}</p>
-
-						
 					</div>
-
-					
 
 					{/* <p>{footer?.copyright}</p> */}
 				</div>
-				<CopyRight content={footer?.copyright}/>
+				<CopyRight content={footer?.copyright} />
 			</div>
 		</footer>
 	);

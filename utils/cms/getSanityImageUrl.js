@@ -59,6 +59,7 @@ export const IMAGE_PRESETS = {
 	millwork: { width: 1360, height: 372, quality: 90 }, // ~3.65:1, native-width, higher q
 	support: { width: 1188, height: 1024, quality: 90 }, // 297:256 aspect ratio
 	// template presests
+	lightbox: { width: 1800, height: 1200, quality: 90 }, // 3:2 ratio
 	hero: { width: 1920, height: 1080, quality: 90 },
 	card: { width: 400, height: 300, quality: 85 },
 	cardWide: { width: 600, height: 400, quality: 85 }, // 3:2 ratio

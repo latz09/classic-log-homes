@@ -2,10 +2,29 @@
 
 import { useState } from 'react';
 import SanityImage from '@/components/ui/SanityImage';
+import { getSanityImageUrl, IMAGE_PRESETS } from '@/utils/cms/getSanityImageUrl';
+import Lightbox from 'yet-another-react-lightbox';
+import 'yet-another-react-lightbox/styles.css';
+import Zoom from 'yet-another-react-lightbox/plugins/zoom';
+import Thumbnails from 'yet-another-react-lightbox/plugins/thumbnails';
+import 'yet-another-react-lightbox/plugins/thumbnails.css';
 
-// One-off sizes for this gallery — skipping the leftover template presets
 const HERO_SIZE = { width: 1200, height: 900, quality: 90 };
 const TILE_SIZE = { width: 700, height: 525, quality: 85 };
+
+// Lift to a shared file once you're reusing this across projects
+const COLORS = {
+	charcoal: '#1E1E1E',
+	cream: '#CFA240',
+	white: '#CFA240',
+};
+function rgba(hex, a) {
+	const n = hex.replace('#', '');
+	const r = parseInt(n.slice(0, 2), 16);
+	const g = parseInt(n.slice(2, 4), 16);
+	const b = parseInt(n.slice(4, 6), 16);
+	return `rgba(${r}, ${g}, ${b}, ${a})`;
+}
 
 const HoverHint = () => (
 	<span className='absolute inset-0 flex items-center justify-center bg-black/0 transition-colors duration-300 group-hover:bg-black/60'>
@@ -24,20 +43,23 @@ const HoverHint = () => (
 );
 
 const MainGallery = ({ heroImage, additionalImages = [] }) => {
-	const [activeIndex, setActiveIndex] = useState(null);
+	const [activeIndex, setActiveIndex] = useState(-1); // -1 = closed
 
 	const gridImages = additionalImages.slice(0, 4);
 	const allImages = [heroImage, ...additionalImages].filter(Boolean);
 	const totalCount = allImages.length;
 	const hasMore = additionalImages.length > 4;
 
-	// Shared lightbox shape: [{ image }] — hero is index 0, tiles are i + 1
-	const lightboxImages = allImages.map((image) => ({ image }));
+	// Full, uncropped URLs for the lightbox — fit:'max' overrides the
+	// helper's default crop so we don't chop up the full-res view
+	const slides = allImages.map((image) => ({
+		src: getSanityImageUrl(image, { ...IMAGE_PRESETS.lightbox, fit: 'max' }),
+		alt: image?.alt || '',
+	}));
 
 	return (
 		<>
 			<div className='grid lg:grid-cols-2 gap-0.75 lg:gap-1.25'>
-				{/* Hero — fills the left column */}
 				<button
 					type='button'
 					onClick={() => setActiveIndex(0)}
@@ -54,7 +76,6 @@ const MainGallery = ({ heroImage, additionalImages = [] }) => {
 					<HoverHint />
 				</button>
 
-				{/* First 4 additional — 2x2, each tile carries its own height */}
 				<div className='grid grid-cols-2 gap-0.75 lg:gap-1.25'>
 					{gridImages.map((img, i) => {
 						const showSeeAll = i === gridImages.length - 1 && hasMore;
@@ -75,7 +96,6 @@ const MainGallery = ({ heroImage, additionalImages = [] }) => {
 								/>
 								<HoverHint />
 
-								{/* Chip only on the 4th tile, only if there are hidden images */}
 								{showSeeAll && (
 									<span className='absolute bottom-0.5 right-0.75 lg:bottom-1 lg:right-1.25 px-0.75 lg:px-1.25 py-0.25 lg:py-0.5 bg-white/80 group-hover:bg-gold text-black rounded-sm font-[600] z-10'>
 										See all {totalCount} images
@@ -87,12 +107,41 @@ const MainGallery = ({ heroImage, additionalImages = [] }) => {
 				</div>
 			</div>
 
-			{/* <Lightbox
-				images={lightboxImages}
-				startIndex={activeIndex}
-				isOpen={activeIndex !== null}
-				onClose={() => setActiveIndex(null)}
-			/> */}
+			<Lightbox
+				open={activeIndex >= 0}
+				close={() => setActiveIndex(-1)}
+				index={activeIndex}
+				slides={slides}
+				plugins={[Zoom, Thumbnails]}
+				animation={{ fade: 500, swipe: 600 }}
+				styles={{
+					root: {
+						'--yarl__color_backdrop': rgba(COLORS.charcoal, 0.94),
+						'--yarl__color_button': COLORS.white,
+						'--yarl__color_button_hover': COLORS.cream,
+						'--yarl__color_button_active': COLORS.cream,
+						'--yarl__thumbnails_container_background_color': rgba(COLORS.charcoal, 0.94),
+						'--yarl__thumbnails_track_background_color': 'transparent',
+						'--yarl__thumbnails_thumbnail_background_color': 'transparent',
+						'--yarl__thumbnails_thumbnail_border_color': 'transparent',
+						'--yarl__thumbnails_thumbnail_border_color_active': 'transparent',
+						'--yarl__thumbnails_thumbnail_border_radius': '0.25rem',
+						'--yarl__thumbnails_thumbnail_padding': '0px',
+						'--yarl__navigation_button_size': '40px',
+						'--yarl__navigation_button_border_radius': '9999px',
+						'--yarl__loading_indicator_color': COLORS.cream,
+					},
+					navigationButton: {
+						backgroundColor: rgba(COLORS.charcoal, 0.18),
+						backdropFilter: 'blur(3px)',
+						border: `1px solid ${rgba(COLORS.white, 0.2)}`,
+						boxShadow: 'none',
+					},
+					slide: { borderRadius: '0.25rem', overflow: 'hidden' },
+					toolbar: { backgroundColor: 'transparent', backdropFilter: 'none' },
+					thumbnail: { border: 'none', borderRadius: '0.25rem' },
+				}}
+			/>
 		</>
 	);
 };
