@@ -68,7 +68,7 @@ const FloorPlan = async ({ params }) => {
 					packageNotIncluded={data.packageNotIncluded}
 					packageFootnote={data.packageFootnote}
 				/>
-				<ContactSection data={data.contact} />
+				<ContactSection data={data.contact} currentPlanName={data.name} />
 			</div>
 		</PageContainer>
 	);

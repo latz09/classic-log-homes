@@ -44,7 +44,7 @@ export default async function handler(req, res) {
 	let sanityResult = null;
 	try {
 		sanityResult = await sanityClient.create({
-			_type: 'submittedContactForm', // Make sure this matches your Sanity schema
+			_type: 'contactForm', // Make sure this matches your Sanity schema
 			...formData,
 			sentAt: new Date().toISOString(),
 		});

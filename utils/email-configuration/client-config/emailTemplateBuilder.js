@@ -72,22 +72,26 @@ export class EmailTemplateBuilder {
 		};
 	}
 
-	formatFieldValue(field, value) {
-		if (!value || value === 'Not provided') {
-			return `<span style="${this.styles.notProvided}">Not provided</span>`;
-		}
-
-		switch (field.type) {
-			case 'email':
-				return `<a href="mailto:${value}" style="${this.styles.link}">${value}</a>`;
-			case 'tel':
-				return `<a href="tel:${value}" style="${this.styles.link}">${value}</a>`;
-			case 'textarea':
-				return `<div style="${this.styles.descriptionBox}">${value}</div>`;
-			default:
-				return `<span style="${this.styles.value}">${value}</span>`;
-		}
+formatFieldValue(field, value) {
+	if (!value || value === 'Not provided') {
+		return `<span style="${this.styles.notProvided}">Not provided</span>`;
 	}
+
+	switch (field.type) {
+		case 'email':
+			return `<a href="mailto:${value}" style="${this.styles.link}">${value}</a>`;
+		case 'tel':
+			return `<a href="tel:${value}" style="${this.styles.link}">${value}</a>`;
+		case 'textarea':
+			return `<div style="${this.styles.descriptionBox}">${value}</div>`;
+		case 'radio': {
+			const match = field.options?.find((opt) => opt.value === value);
+			return `<span style="${this.styles.value}">${match ? match.label : value}</span>`;
+		}
+		default:
+			return `<span style="${this.styles.value}">${value}</span>`;
+	}
+}
 
 	buildFieldRows(formData) {
 		const fields = this.config.formFields;
