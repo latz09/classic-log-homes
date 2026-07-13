@@ -14,16 +14,22 @@ const ContactSection = async ({ data, currentPlanName }) => {
 
 	return (
 		<div id='contact' className='grid lg:grid-cols-2 gap-1.75 lg:gap-3.5 scroll-mt-1.5 lg:scroll-mt-3'>
-			<div>
-				<HeadingWithOverline overline={overline} heading={heading} body={body} />
-				<div>
-					<p className='text-paragraph-lg mt-1.25 lg:mt-2.5 mb-0.5 lg:mb-1'>
-						Call Jeff at:
-						<span className='text-gold'> {phone}</span>
-					</p>
-					<p className='text-paragraph'>{availability}</p>
-				</div>
-			</div>
+		<div>
+    <HeadingWithOverline overline={overline} heading={heading} body={body} />
+    <div>
+        <p className='text-paragraph-lg mt-1.25 lg:mt-2.5 mb-0.5 lg:mb-1'>
+            {'Text or '}
+            <a href={`tel:${phone}`} className='text-gold hover:underline'>
+                call
+            </a>
+            {' at: '}
+            <a href={`sms:${phone}`} className='text-gold hover:underline'>
+                {phone}
+            </a>
+        </p>
+        <p className='text-paragraph'>{availability}</p>
+    </div>
+</div>
 			<div className='bg-white p-1.25 lg:p-2.25 rounded-lg text-black'>
 				<SubmitContactForm
 					formHeading={formHeading}

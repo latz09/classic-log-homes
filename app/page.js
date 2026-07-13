@@ -50,7 +50,7 @@ export default async function Home() {
 			</div>
 
 			{/* Pull the pillars up onto the hero's bottom apron */}
-			<div className='max-container relative z-20 -mt-[5vh] 3xl:-mt-[5vh] space-y-5 lg:space-y-10'>
+			<div className='max-container relative z-0 -mt-[5vh] 3xl:-mt-[5vh] space-y-5 lg:space-y-10'>
 				<Pillars data={pillars} />
 				<WhatYourBuying data={whatYoureBuying} />
 				<FeaturedPlans data={featuredPlans} />

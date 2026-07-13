@@ -42,7 +42,7 @@ const FloorPlan = async ({ params }) => {
 	return (
 		<PageContainer>
 			<NavigationContainer />
-			<div className='max-container lg:pt-1'>
+			<div className='max-container pt-6 lg:pt-10 3xl:pt-12'>
 				<TopHeading
 					name={data.name}
 					startingPrice={data.startingPrice}

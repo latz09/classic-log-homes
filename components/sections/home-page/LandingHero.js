@@ -11,7 +11,7 @@ const LandingHero = ({ data, children }) => {
 		.map((line) => `${line}.`);
 
 	return (
-		<section className='relative flex h-[100vh] sm:h-[105vh] xl:h-[110vh] w-full flex-col overflow-hidden'>
+		<section className='relative flex h-[100vh] sm:h-[105vh] xl:h-[110vh] w-full flex-col  overflow-hidden'>
 			{/* Background carousel — crossfades between images */}
 			<HeroCarousel images={images} alt={headline} className='z-0' />
 

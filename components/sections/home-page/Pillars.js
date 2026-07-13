@@ -7,7 +7,7 @@ const Pillars = ({ data }) => {
 	const { items } = data;
 
 	return (
-		<RevealStagger className='grid grid-cols-2 xl:grid-cols-4 gap-0.75 lg:gap-2 xl:gap-4 3xl:gap-5 backdrop-blur-sm bg-black/10'>
+		<RevealStagger className='grid grid-cols-2 xl:grid-cols-4 gap-0.75 lg:gap-2 xl:gap-4 3xl:gap-5 backdrop-blur-sm bg-black/10 -20'>
 			{items.map((item, i) => (
 				<motion.div
 					key={i}

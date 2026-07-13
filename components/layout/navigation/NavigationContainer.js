@@ -8,11 +8,9 @@ const NavigationContainer = async () => {
 	const navlinks = data?.navLinks || [];
 	const logoUrl = data?.logo?.asset?.url || null;
 
-
-	
 	return (
-		<div className='max-container'>
-			<nav className='px-1 py-0.5 bg-white/75 backdrop-blur-sm   mt-1.25 mb-3 rounded'>
+		<div className='fixed top-0 inset-x-0 z-50 max-container'>
+			<nav className='px-1 py-0.5 bg-white/75 backdrop-blur-sm mt-1.25 mb-3 rounded'>
 				<MobileNavbar navLinks={navlinks} logoUrl={logoUrl} />
 				<DesktopNavbar navLinks={navlinks} logoUrl={logoUrl} />
 			</nav>
