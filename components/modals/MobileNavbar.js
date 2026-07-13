@@ -1,7 +1,7 @@
 'use client';
 
 import { track } from '@vercel/analytics';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
@@ -11,8 +11,8 @@ import Logo from '../lib/Logo';
 const MobileNavbar = ({ navLinks = [], variant, logoUrl }) => {
 	const [isNavOpen, setIsNavOpen] = useState(false);
 	const [mounted, setMounted] = useState(false);
+	const isNavigatingRef = useRef(false);
 
-	// Portal target (document.body) only exists on the client
 	useEffect(() => setMounted(true), []);
 
 	const toggleNav = () => setIsNavOpen(!isNavOpen);
@@ -22,6 +22,9 @@ const MobileNavbar = ({ navLinks = [], variant, logoUrl }) => {
 			destination: url,
 			buttonText: label,
 		});
+		// We're navigating to a new page — don't restore the old scroll
+		// position once this component (or its replacement) re-evaluates.
+		isNavigatingRef.current = true;
 		toggleNav();
 	};
 
@@ -37,14 +40,24 @@ const MobileNavbar = ({ navLinks = [], variant, logoUrl }) => {
 			document.body.style.right = '0';
 			document.body.style.overflow = 'hidden';
 			document.body.dataset.scrollY = scrollY;
-		} else {
+		} else if (document.body.style.position === 'fixed') {
+			// Guard: only run restoration if the body is actually locked.
+			// Without this, a freshly-mounted MobileNavbar on a NEW page
+			// (isNavOpen starts false) would read a leftover scrollY value
+			// left on document.body by the previous page's instance and
+			// jump the new page down to it. That's the mobile nav bug.
 			const scrollY = document.body.dataset.scrollY || '0';
 			document.body.style.position = '';
 			document.body.style.top = '';
 			document.body.style.left = '';
 			document.body.style.right = '';
 			document.body.style.overflow = '';
-			window.scrollTo(0, parseInt(scrollY));
+			delete document.body.dataset.scrollY;
+
+			if (!isNavigatingRef.current) {
+				window.scrollTo(0, parseInt(scrollY));
+			}
+			isNavigatingRef.current = false;
 		}
 	}, [isNavOpen]);
 
@@ -85,13 +98,11 @@ const MobileNavbar = ({ navLinks = [], variant, logoUrl }) => {
 				/>
 			</header>
 
-			{/* Overlay + panel portal out to <body> so no hero stacking context can trap them */}
 			{mounted &&
 				createPortal(
 					<AnimatePresence>
 						{isNavOpen && (
 							<>
-								{/* Overlay */}
 								<motion.div
 									className='fixed inset-0 bg-darkGold/30 backdrop-blur-sm z-[100]'
 									variants={overlayVariants}
@@ -102,7 +113,6 @@ const MobileNavbar = ({ navLinks = [], variant, logoUrl }) => {
 									onClick={toggleNav}
 								/>
 
-								{/* Menu Panel */}
 								<motion.nav
 									className='fixed top-0 right-0 h-full w-[83%] max-w-[400px] bg-black z-[100] shadow-lifted'
 									variants={menuVariants}
@@ -115,12 +125,10 @@ const MobileNavbar = ({ navLinks = [], variant, logoUrl }) => {
 									aria-modal='true'
 								>
 									<div className='flex flex-col h-full px-xs py-xs'>
-										{/* Header */}
 										<div className='flex items-center justify-between mb-xl'>
 											<Logo className='w-[10rem] h-auto' white url={logoUrl} />
 										</div>
 
-										{/* Links */}
 										<motion.ul
 											className='flex-1 space-y-1'
 											variants={linkContainerVariants}
@@ -140,7 +148,6 @@ const MobileNavbar = ({ navLinks = [], variant, logoUrl }) => {
 											))}
 										</motion.ul>
 
-										{/* Contact CTA */}
 										{contactLink && (
 											<motion.div
 												initial={{ y: 20, opacity: 0 }}
@@ -161,7 +168,6 @@ const MobileNavbar = ({ navLinks = [], variant, logoUrl }) => {
 										)}
 									</div>
 								</motion.nav>
-								{/* Close icon — above the overlay, mirrors header spacing so it lands where the hamburger was */}
 								<motion.div
 									className='fixed inset-x-0 top-0 z-[110] max-container pointer-events-none'
 									initial={{ opacity: 0 }}
