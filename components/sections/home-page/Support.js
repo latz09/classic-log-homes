@@ -18,7 +18,7 @@ const Support = ({ data }) => {
 	return (
 		<div
 			id='support'
-			className='space-y-2 lg:space-y-4 scroll-mt-1.5 lg:scroll-mt-3
+			className='space-y-2 lg:space-y-4 scroll-mt-5.5 lg:scroll-mt-[7rem] 3xl:scroll-mt-10
 		
 		'
 		>

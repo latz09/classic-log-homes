@@ -13,7 +13,7 @@ const ContactSection = async ({ data, currentPlanName }) => {
 	const floorPlanOptions = [...floorPlans.map((plan) => plan.name), 'Not sure yet'];
 
 	return (
-		<div id='contact' className='grid lg:grid-cols-2 gap-1.75 lg:gap-3.5 scroll-mt-1.5 lg:scroll-mt-3'>
+		<div id='contact' className='grid lg:grid-cols-2 gap-1.75 lg:gap-3.5 scroll-mt-5.5 lg:scroll-mt-[7rem] 3xl:scroll-mt-10'>
 		<div>
     <HeadingWithOverline overline={overline} heading={heading} body={body} />
     <div>

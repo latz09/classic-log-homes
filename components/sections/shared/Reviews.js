@@ -9,7 +9,7 @@ const Reviews = ({ data }) => {
 	if (!testimonials?.length) return null;
 
 	return (
-		<div id='reviews' className='scroll-mt-1.5 lg:scroll-mt-3'>
+		<div id='reviews' className='scroll-mt-5.5 lg:scroll-mt-[7rem] 3xl:scroll-mt-10'>
 			<ReviewCarousel
 				overline={overline}
 				heading={heading}
