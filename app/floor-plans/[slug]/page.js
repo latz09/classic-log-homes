@@ -34,43 +34,45 @@ export async function generateMetadata({ params }) {
 
 const FloorPlan = async ({ params }) => {
 	const { slug } = await params;
-
 	const data = await fc(Q, { slug });
 
 	if (!data) notFound();
 
 	return (
-		<PageContainer>
+		<>
 			<NavigationContainer />
-			<div className='max-container pt-6 lg:pt-10 3xl:pt-12'>
-				<TopHeading
-					name={data.name}
-					startingPrice={data.startingPrice}
-					heroIntro={data.heroIntro}
-				/>
-				<Specs data={data.specs} />
-				<MainGallery
-					heroImage={data.heroImage}
-					additionalImages={data.renderings}
-				/>
-			</div>
-			<div className='max-container space-y-5 lg:space-y-10 mt-5 lg:mt-10'>
-				<AboutThePlan data={data.about} walkAroundURL={data.walkaroundUrl} />
-				<FeaturesAndPrintsContainer
-					keyFeatures={data.keyFeatures}
-					bluePrintImages={data.blueprintImages}
-				/>
-				<Details
-					name={data.name}
-					overline='Details'
-					body={`The ${data.startingPrice} starting price covers the log package. Here's what's included and what you'll source locally.`}
-					packageIncluded={data.packageIncluded}
-					packageNotIncluded={data.packageNotIncluded}
-					packageFootnote={data.packageFootnote}
-				/>
-				<ContactSection data={data.contact} currentPlanName={data.name} />
-			</div>
-		</PageContainer>
+
+			<PageContainer>
+				<div className='max-container pt-6 lg:pt-10 3xl:pt-12'>
+					<TopHeading
+						name={data.name}
+						startingPrice={data.startingPrice}
+						heroIntro={data.heroIntro}
+					/>
+					<Specs data={data.specs} />
+					<MainGallery
+						heroImage={data.heroImage}
+						additionalImages={data.renderings}
+					/>
+				</div>
+				<div className='max-container space-y-5 lg:space-y-10 mt-5 lg:mt-10'>
+					<AboutThePlan data={data.about} walkAroundURL={data.walkaroundUrl} />
+					<FeaturesAndPrintsContainer
+						keyFeatures={data.keyFeatures}
+						bluePrintImages={data.blueprintImages}
+					/>
+					<Details
+						name={data.name}
+						overline='Details'
+						body={`The ${data.startingPrice} starting price covers the log package. Here's what's included and what you'll source locally.`}
+						packageIncluded={data.packageIncluded}
+						packageNotIncluded={data.packageNotIncluded}
+						packageFootnote={data.packageFootnote}
+					/>
+					<ContactSection data={data.contact} currentPlanName={data.name} />
+				</div>
+			</PageContainer>
+		</>
 	);
 };
 
