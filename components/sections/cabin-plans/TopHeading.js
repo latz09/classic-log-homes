@@ -4,7 +4,9 @@ const TopHeading = ({ name, startingPrice, heroIntro }) => {
 			<h1>{name}</h1>
 			<div className="space-y-0.75 lg:space-y-1">
 				<p className='text-paragraph-lg'>{heroIntro}</p>
-				{/* <p className='text-paragraph-lg text-gold'>Starting at {startingPrice}</p> */}
+				{startingPrice && (
+					<p className='text-paragraph-lg text-gold'>Starting at {startingPrice}</p>
+				)}
 			</div>
 		</div>
 	);

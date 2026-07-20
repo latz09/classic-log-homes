@@ -11,6 +11,7 @@ export const FETCH_SITE_SETTINGS_QUERY = `*[_type == "siteSettings" && _id == "s
   },
   freeGuides[]{
     title,
+    showInFooter,
     "fileUrl": file.asset->url
   }
 }`

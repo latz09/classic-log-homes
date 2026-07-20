@@ -3,12 +3,17 @@ import Logo from '../../lib/Logo';
 import { fetchContent as fc } from '@/utils/cms/fetchContent';
 import { FETCH_SITE_SETTINGS_QUERY as Q } from '@/data/queries/settings/FETCH_SITE_SETTINGS_QUERY';
 import LogGraphic from '@/components/ui/graphics/LogGraphic';
+import ButtonLink from '@/components/ui/ButtonLink';
 
 const currentYear = new Date().getFullYear();
 
 const Footer = async () => {
 	const data = await fc(Q);
-	const { footer, contact } = data || {};
+	const { footer, contact, freeGuides } = data || {};
+
+	const footerGuides = (freeGuides || []).filter(
+		(g) => g.showInFooter && g.fileUrl,
+	);
 
 	return (
 		<footer className='relative overflow-hidden bg-[#131313] mt-5 lg:mt-10 pt-2.5 lg:pt-5'>
@@ -44,6 +49,24 @@ const Footer = async () => {
 							<Link href='/#floor-plans'>Floor Plans</Link>
 							<Link href='/#contact'>Contact</Link>
 						</div>
+
+						{footerGuides.length > 0 && (
+							<div className='flex flex-col gap-0.75 pb-1 lg:pt-1 '>
+								{footerGuides.map((guide, i) => (
+									<ButtonLink
+										key={i}
+										href={guide.fileUrl}
+										variant='tertiary-on-dark'
+										external
+										download
+										event={`Footer - Download ${guide.title}`}
+									>
+										Download {guide.title}
+									</ButtonLink>
+								))}
+							</div>
+						)}
+
 						<p>{footer?.tagline}</p>
 					</div>
 
@@ -58,16 +81,9 @@ const Footer = async () => {
 export default Footer;
 
 const CopyRight = ({ content }) => {
-	// Get the current year
-
 	return (
 		<div className=' py-0.75 grid gap-3 text-dark border-t border-darkGold text-center lg:text-left'>
-			{/* <Link href='/legal/privacy-policy'>
-				<span className='text-xs font-semibold'>Privacy Policy</span>
-			</Link> */}
-
 			<p>{`© ${currentYear} by ${content}`}</p>
-			{/* <PoweredBy /> */}
 		</div>
 	);
 };
