@@ -13,7 +13,7 @@ const DesktopNavbar = ({ navLinks, logoUrl }) => {
 
 	return (
 		<div className='hidden lg:flex items-center w-full'>
-			<Logo className='lg:w-[13rem] 2xl:w-[17rem] h-auto' url={logoUrl} />
+			<Logo className='lg:w-[13rem] 2xl:w-[18rem] 3xl:w-[20rem] h-auto' url={logoUrl} />
 			<nav className='flex gap-1.75 items-center ml-auto'>
 				{mainLinks.map((link, index) => (
 					<a

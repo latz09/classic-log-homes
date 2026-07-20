@@ -22,7 +22,7 @@ const FeaturedPlans = ({ data }) => {
 				body={subheadline}
 			/>
 			<div className='grid gap-x-1 gap-y-1.5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-1.5 lg:gap-y-3'>
-				{previewPlans.map((plan, i) => (
+				{plans.map((plan, i) => (
 					<Link
 						key={`${plan._id}-${i}`}
 						href={`/floor-plans/${plan.slug}`}
