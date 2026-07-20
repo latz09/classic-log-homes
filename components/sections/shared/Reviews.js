@@ -3,9 +3,10 @@
 import { useRef, useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import HeadingWithOverline from '@/components/ui/HeadingWithOverline';
+import ButtonLink from '@/components/ui/ButtonLink';
 
 const Reviews = ({ data }) => {
-	const { overline, heading, testimonials } = data || {};
+	const { overline, heading, testimonials, googleReviewsUrl } = data || {};
 	if (!testimonials?.length) return null;
 
 	return (
@@ -14,6 +15,7 @@ const Reviews = ({ data }) => {
 				overline={overline}
 				heading={heading}
 				items={testimonials}
+				googleReviewsUrl={googleReviewsUrl}
 			/>
 		</div>
 	);
@@ -21,7 +23,7 @@ const Reviews = ({ data }) => {
 
 export default Reviews;
 
-const ReviewCarousel = ({ overline, heading, items }) => {
+const ReviewCarousel = ({ overline, heading, items, googleReviewsUrl }) => {
 	const containerRef = useRef(null);
 	const trackRef = useRef(null);
 	const [offset, setOffset] = useState(0);
@@ -95,6 +97,19 @@ const ReviewCarousel = ({ overline, heading, items }) => {
 					))}
 				</motion.div>
 			</div>
+
+			{googleReviewsUrl && (
+				<div className='flex justify-center pt-0.5 lg:pt-1'>
+					<ButtonLink
+						href={googleReviewsUrl}
+						variant='tertiary-on-dark'
+						external
+						event='Reviews - Read More Google Reviews'
+					>
+						Read more Google reviews
+					</ButtonLink>
+				</div>
+			)}
 		</div>
 	);
 };

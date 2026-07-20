@@ -16,23 +16,23 @@ const MenuIcon = ({ toggleNav, isNavOpen }) => {
 				whileHover={{ scale: 1.1 }}
 				whileTap={{ scale: 0.9 }}
 			>
-				<div className='flex flex-col space-y-0.25'>
-					<span
-						className={`block w-2 h-[0.25rem] ${barColor} transition-all duration-300 origin-center ${
-							isNavOpen ? 'rotate-45 translate-y-[0.5rem]' : ''
-						}`}
-					/>
-					<span
-						className={`block w-2 h-[0.25rem] ${barColor} transition-all duration-300 ${
-							isNavOpen ? 'opacity-0' : ''
-						}`}
-					/>
-					<span
-						className={`block w-2 h-[0.25rem] ${barColor} transition-all duration-300 origin-center ${
-							isNavOpen ? '-rotate-45 -translate-y-[0.5rem]' : ''
-						}`}
-					/>
-				</div>
+			<div className='flex flex-col space-y-0.25'>
+	<span
+		className={`block w-2 h-[0.15rem] ${barColor} transition-all duration-300 origin-center ${
+			isNavOpen ? 'rotate-45 translate-y-[0.4rem]' : ''
+		}`}
+	/>
+	<span
+		className={`block w-2 h-[0.15rem] ${barColor} transition-all duration-300 ${
+			isNavOpen ? 'opacity-0' : ''
+		}`}
+	/>
+	<span
+		className={`block w-2 h-[0.15rem] ${barColor} transition-all duration-300 origin-center ${
+			isNavOpen ? '-rotate-45 -translate-y-[0.4rem]' : ''
+		}`}
+	/>
+</div>
 			</motion.div>
 		</button>
 	);

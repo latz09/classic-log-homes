@@ -90,7 +90,7 @@ const MobileNavbar = ({ navLinks = [], variant, logoUrl }) => {
 	return (
 		<div className='lg:hidden relative z-20'>
 			<header className='flex items-center justify-between'>
-				<Logo className='w-[10rem] h-auto' variant={variant} url={logoUrl} />
+				<Logo className='w-[13rem] h-auto' variant={variant} url={logoUrl} />
 				<MenuIcon
 					isNavOpen={isNavOpen}
 					toggleNav={toggleNav}

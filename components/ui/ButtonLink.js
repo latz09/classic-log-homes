@@ -10,12 +10,14 @@ const VARIANTS = {
 	'primary-on-light': 'px-1.25 py-0.75 bg-darkGold text-white hover:bg-black',
 	'secondary-on-light':
 		'px-1.25 py-0.75 bg-white border border-black text-black hover:bg-black hover:text-white',
-	'tertiary-on-light': 'py-0.75 px-0 hover:px-1.25 text-darkGold hover:text-white',
+	'tertiary-on-light':
+		'py-0.75 px-0 hover:px-1.25 text-darkGold hover:text-white',
 	// On dark backgrounds
-	'primary-on-dark': 'px-1.25 py-0.75 bg-gold text-black hover:bg-darkGold hover:text-white',
+	'primary-on-dark':
+		'px-1.25 py-0.75 bg-gold text-black hover:bg-darkGold hover:text-white',
 	'secondary-on-dark':
 		'px-1.25 py-0.75 bg-black/0 border border-white text-white hover:bg-white hover:text-black',
-	'tertiary-on-dark':  'py-0.75 px-0 hover:px-1.25 text-gold hover:text-black',
+	'tertiary-on-dark': 'py-0.75 px-0 hover:px-1.25 text-gold hover:text-black',
 };
 
 // Color that wipes in from the left on tertiary hover
@@ -52,6 +54,7 @@ function Arrow() {
  * @param {boolean} external - Whether to use target="_blank".
  * @param {string} className - Additional classes.
  * @param {string} event - Optional event name for Vercel Analytics tracking (automatically prefixed with "CTA Click - ").
+ * @param {'a'|'span'} as - Render as a real link ('a', default) or a styled non-link span, for use inside an already-clickable parent (e.g. a card wrapped in its own Link).
  * @param {ReactNode} children - The button label.
  */
 export default function ButtonLink({
@@ -60,6 +63,7 @@ export default function ButtonLink({
 	external = false,
 	className = '',
 	event, // Pass short name like "Hero - Free Consultation", component adds "CTA Click - " prefix
+	as = 'a',
 	children,
 	...props
 }) {
@@ -120,6 +124,15 @@ export default function ButtonLink({
 			</span>
 		</span>
 	);
+
+	// Non-link mode: same look, no <a>/<Link> — for use inside a parent that's already clickable
+	if (as === 'span') {
+		return (
+			<span className={combined} onClick={handleClick} {...props}>
+				{content}
+			</span>
+		);
+	}
 
 	if (external) {
 		return (

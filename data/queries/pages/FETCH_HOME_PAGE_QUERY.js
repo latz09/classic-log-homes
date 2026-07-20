@@ -92,6 +92,7 @@ export const FETCH_HOME_PAGE_QUERY = `*[_type == "homePage" && _id == "homePage"
   reviews{
     overline,
     heading,
+    googleReviewsUrl,
     testimonials[]->{
       _id,
       quote,

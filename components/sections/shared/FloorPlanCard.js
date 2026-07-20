@@ -61,9 +61,8 @@ const FloorPlanCard = ({ data }) => {
 				{shortDescription}
 			</p>
 
-			
 			<ButtonLink
-				href={`/floor-plans/${slug}`}
+				as='span'
 				variant='tertiary-on-dark'
 				event={`Floor Plan Card - ${name} CTA`}
 			>
