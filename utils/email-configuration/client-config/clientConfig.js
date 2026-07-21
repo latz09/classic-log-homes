@@ -2,16 +2,13 @@
 export const clientConfig = {
 	branding: {
 		name: 'Classic Log Homes',
-		logoUrl: 'https://cdn.sanity.io/images/.../classic-log-homes-logo.png', // TODO: swap in real asset URL
+		logoUrl:
+			'https://cdn.sanity.io/images/jeiwl3td/production/9ab1df5a3433b9ef05c6d30940a366cc57c85eb7-900x150.png',
 		colors: {
-			headerBackground: '#FFFDF9',
-			bodyBackground: '#FFFDF9',
-			detailsBoxBackground: '#F5EFE6',
-			descriptionBackground: '#FFFDF9',
-			descriptionBorderLeft: '#D39F4A',
-			footerBackground: '#FFFDF9',
-			footerText: '#1A1614',
-			textPrimary: '#1A1614',
+			background: '#fcfaf2',
+			surface: '#FFF8E3',
+			accent: '#704D02',
+			text: '#1E1E1E',
 			textMuted: '#8A7E72',
 		},
 		contactInfo: {
@@ -19,6 +16,13 @@ export const clientConfig = {
 			email: process.env.CLIENT_EMAIL,
 		},
 	},
+
+	features: {
+		// Auto-response to the person who filled out the form is a paid add-on.
+		// Off by default — flip to true once the client's paid for it.
+		autoResponseEmail: false,
+	},
+
 	formFields: [
 		{ name: 'name', label: 'Name', required: true, type: 'text' },
 		{ name: 'phoneNumber', label: 'Phone Number', required: true, type: 'tel' },
@@ -29,7 +33,7 @@ export const clientConfig = {
 			label: 'Project Details',
 			required: false,
 			type: 'textarea',
-		}, // was 'message'
+		},
 		{
 			name: 'projectType',
 			label: 'Project Type',
@@ -42,6 +46,7 @@ export const clientConfig = {
 			],
 		},
 	],
+
 	messaging: {
 		clientEmailSubject: (name) => `New Website Inquiry from ${name}`,
 		autoResponseSubject: (name) => `${name}, We Received Your Message`,

@@ -4,15 +4,20 @@
 import { useState } from 'react';
 import ContactForm from './ContactForm';
 
-const SubmitContactForm = ({ formHeading, formNote, floorPlanOptions, currentPlanName }) => {
-const [formData, setFormData] = useState({
-  name: '',
-  phoneNumber: '',
-  email: '',
-  floorPlan: currentPlanName || '',
-  description: '', 
-  projectType: '',
-});
+const SubmitContactForm = ({
+	formHeading,
+	formNote,
+	floorPlanOptions,
+	currentPlanName,
+}) => {
+	const [formData, setFormData] = useState({
+		name: '',
+		phoneNumber: '',
+		email: '',
+		floorPlan: currentPlanName || '',
+		description: '',
+		projectType: '',
+	});
 
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState('');
@@ -54,7 +59,7 @@ const [formData, setFormData] = useState({
 					phoneNumber: '',
 					email: '',
 					floorPlan: currentPlanName || '',
-					message: '',
+					description: '',
 					projectType: '',
 				});
 				setSuccess('Message sent successfully!');
