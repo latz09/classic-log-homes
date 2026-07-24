@@ -82,8 +82,15 @@ export default Footer;
 
 const CopyRight = ({ content }) => {
 	return (
-		<div className=' py-0.75 grid gap-3 text-dark border-t border-darkGold text-center lg:text-left'>
-			<p>{`© ${currentYear} by ${content}`}</p>
+		<div className='py-0.75 border-t border-darkGold text-dark'>
+			<div className='flex flex-col-reverse gap-1 items-center text-center lg:flex-row lg:justify-between lg:text-left'>
+				<p>{`© ${currentYear} by ${content}`}</p>
+
+				<div className='flex gap-1 lg:gap-2'>
+					<Link href='/legal/privacy-policy'>Privacy Policy</Link>
+					<Link href='/legal/accessibility'>Accessibility</Link>
+				</div>
+			</div>
 		</div>
 	);
 };

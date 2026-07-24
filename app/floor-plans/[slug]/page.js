@@ -15,6 +15,7 @@ import AboutThePlan from '@/components/sections/cabin-plans/AboutThePlan';
 import FeaturesAndPrintsContainer from '@/components/sections/cabin-plans/FeaturesAndPrintsContainer';
 import Details from '@/components/sections/cabin-plans/Details';
 import ContactSection from '@/components/sections/shared/ContactSection';
+import Reveal from '@/components/animations/Reveal';
 
 export async function generateStaticParams() {
 	const slugs = await fc(SLUGS_Q);
@@ -41,8 +42,9 @@ const FloorPlan = async ({ params }) => {
 	return (
 		<>
 			<NavigationContainer />
-
 			<PageContainer>
+				{/* Above the fold — PageContainer's fade already covers this block.
+	    MainGallery holds the LCP image; don't put a reveal on it. */}
 				<div className='max-container pt-6 lg:pt-10 3xl:pt-12'>
 					<TopHeading
 						name={data.name}
@@ -55,21 +57,36 @@ const FloorPlan = async ({ params }) => {
 						additionalImages={data.renderings}
 					/>
 				</div>
+
 				<div className='max-container space-y-5 lg:space-y-10 mt-5 lg:mt-10'>
-					<AboutThePlan data={data.about} walkAroundURL={data.walkaroundUrl} />
-					<FeaturesAndPrintsContainer
-						keyFeatures={data.keyFeatures}
-						bluePrintImages={data.blueprintImages}
-					/>
-					<Details
-						name={data.name}
-						overline='Details'
-						body={`The ${data.startingPrice} starting price covers the log package. Here's what's included and what you'll source locally.`}
-						packageIncluded={data.packageIncluded}
-						packageNotIncluded={data.packageNotIncluded}
-						packageFootnote={data.packageFootnote}
-					/>
-					<ContactSection data={data.contact} currentPlanName={data.name} />
+					<Reveal amount={0.1}>
+						<AboutThePlan
+							data={data.about}
+							walkAroundURL={data.walkaroundUrl}
+						/>
+					</Reveal>
+
+					<Reveal amount={0.1}>
+						<FeaturesAndPrintsContainer
+							keyFeatures={data.keyFeatures}
+							bluePrintImages={data.blueprintImages}
+						/>
+					</Reveal>
+
+					<Reveal amount={0.1}>
+						<Details
+							name={data.name}
+							overline='Details'
+							body={`The ${data.startingPrice} starting price covers the log package. Here's what's included and what you'll source locally.`}
+							packageIncluded={data.packageIncluded}
+							packageNotIncluded={data.packageNotIncluded}
+							packageFootnote={data.packageFootnote}
+						/>
+					</Reveal>
+
+					<Reveal amount={0.1}>
+						<ContactSection data={data.contact} currentPlanName={data.name} />
+					</Reveal>
 				</div>
 			</PageContainer>
 		</>

@@ -1,230 +1,254 @@
-// components/PrivacyPolicy.jsx
-// -------------------------------------------
-// Update the four variables below per client
-// -------------------------------------------
-const businessName = 'Company Name';
-const contactEmail = 'client@email.com';
-const effectiveDate = 'January 1, 2025';
-const businessLocation = 'United States'; // e.g., "United States", "Wisconsin", etc.
+import NavigationContainer from '@/components/layout/navigation/NavigationContainer';
+import { fetchSeoSettings } from '@/utils/cms/fetchSeoSettings';
 
-export default function PrivacyPolicy() {
+// Have counsel review before launch. This is a professional template, not legal advice.
+
+// ---- Static config (edit here) ----
+const effectiveDate = 'August 1, 2026'; // TODO: confirm actual launch / DNS cutover date
+const businessLocation = 'Wisconsin, United States';
+const contactPhone = '(715) 887-2550';
+// -----------------------------------
+
+const linkClass = 'font-semibold underline text-[#CFA240] hover:opacity-80';
+
+export default async function PrivacyPolicy() {
+	const seo = await fetchSeoSettings();
+	const businessName = seo?.businessName ?? 'Classic Log Homes, Inc.';
+	const contactEmail = seo?.contactEmail ?? 'classicloghomes@gmail.com';
+
 	return (
-		<section className='flex justify-center py-2 px-1'>
-			<article className='max-w-5xl px-1.5 lg:px-md py-sm'>
-				{/* HEADER */}
-				<header className='mb-md'>
-					<h4>{businessName} &ndash; Privacy&nbsp;Policy</h4>
-					<p className='mt-0.5 text-caption opacity-60'>
-						Effective Date:&nbsp;{effectiveDate}
-					</p>
-					<p className='mt-1 text-paragraph-sm'>
-						{`This Privacy Policy explains how ${businessName} ("we," "us," or "our") collects, uses, discloses, and safeguards your information when you visit our website or use our services.`}
-					</p>
-					<p className='mt-0.5 text-caption italic opacity-70'>
-						{`NOTE: For readability, "site" refers to all pages, applications, and services controlled by ${businessName}.`}
-					</p>
-				</header>
+		<>
+			<NavigationContainer />
 
-				{/* 1. INFORMATION WE COLLECT */}
-				<section className='mb-sm'>
-					<h6>1&nbsp;&ndash; Information We Collect</h6>
-					<ul className='list-disc list-inside space-y-0.5 mt-0.75 text-paragraph-sm'>
+			<section className='pt-6 lg:pt-10 3xl:pt-12 px-[1.5rem]'>
+				<article className='max-w-[64rem] mx-auto'>
+					<h1 className='mb-[1rem]'>Privacy Policy</h1>
+
+					<p className='text-paragraph-sm mb-[2rem]'>
+						Effective date: {effectiveDate}
+					</p>
+
+					<p className='text-paragraph mb-[1rem]'>
+						{businessName} respects your privacy. This policy explains what
+						information we collect when you use our website, why we collect it,
+						how we handle it, and the choices you have. We keep this simple on
+						purpose &mdash; we collect only what we need to answer your
+						questions and quote log home packages.
+					</p>
+
+					<p className='text-paragraph-sm mb-[3rem]'>
+						NOTE: This policy covers this website only. It does not cover
+						information you share with us in person at our showroom, by phone,
+						or by text message outside of the site.
+					</p>
+
+					<h4 className='mb-[0.75rem]'>1. Information We Collect</h4>
+					<ul className='text-paragraph mb-[2rem] space-y-[0.5rem] list-disc pl-[1.25rem]'>
 						<li>
-							<strong>Information you provide&nbsp;directly.</strong> Examples:
-							name, email, phone, postal address, order details, support
-							requests, or any other data you voluntarily submit.
+							<strong>Contact form information.</strong> When you submit our
+							contact form, we collect the details you provide &mdash; typically
+							your name, email address, phone number, and whatever you tell us
+							about your project.
 						</li>
 						<li>
-							<strong>Device &amp; usage information.</strong> IP address,
-							browser type, referring URLs, pages viewed, and the date/time of
-							each visit, collected automatically via cookies or similar
-							technologies.
+							<strong>Information you send us directly.</strong> If you email,
+							call, or text us using the contact details on this site, we keep
+							that correspondence so we can follow up.
 						</li>
 						<li>
-							<strong>Payment information (if applicable).</strong> Processed by
-							our payment partner&nbsp;&mdash; we do <em>not</em> store full
-							card numbers.
+							<strong>Device and usage information.</strong> Like most websites,
+							we collect basic technical data automatically &mdash; IP address,
+							browser type, device type, pages viewed, referring site, and time
+							spent on the site &mdash; through analytics tools.
+						</li>
+						<li>
+							<strong>Interaction events.</strong> We record non-identifying
+							events such as contact form submissions and taps on our
+							click-to-call phone link so we know which parts of the site are
+							useful.
 						</li>
 					</ul>
-				</section>
 
-				{/* 2. LEGAL BASIS (GDPR) */}
-				<section className='mb-sm'>
-					<h6>2&nbsp;&ndash; Legal Bases for Processing&nbsp;(GDPR)</h6>
-					<p className='mt-0.75 text-paragraph-sm'>
-						If you reside in the European Economic Area, we process your
-						personal data under the following legal bases:
+					<h4 className='mb-[0.75rem]'>2. Legal Bases for Processing (GDPR)</h4>
+					<p className='text-paragraph mb-[1rem]'>
+						If you are located in the European Economic Area or the United
+						Kingdom, we process your personal information under one or more of
+						the following legal bases:
 					</p>
-					<ul className='list-disc list-inside space-y-0.5 mt-0.75 text-paragraph-sm'>
+					<ul className='text-paragraph mb-[2rem] space-y-[0.5rem] list-disc pl-[1.25rem]'>
 						<li>
-							<strong>Contract:</strong> To perform a contract with you or
-							provide requested services.
+							<strong>Consent</strong> &mdash; where you have voluntarily given
+							us your information, such as by submitting a contact form.
 						</li>
 						<li>
-							<strong>Consent:</strong> When you have given us explicit
-							permission (you may withdraw at any time).
+							<strong>Legitimate interests</strong> &mdash; to operate, secure,
+							and improve our website and to respond to inquiries about our
+							products and services.
 						</li>
 						<li>
-							<strong>Legitimate Interest:</strong> For security, analytics,
-							marketing, or improving our services, provided those interests are
-							not overridden by your rights.
+							<strong>Performance of a contract</strong> &mdash; where
+							processing is necessary to provide a quote, fulfill an order, or
+							deliver a log home package.
 						</li>
 						<li>
-							<strong>Legal Obligation:</strong> To comply with applicable laws.
+							<strong>Legal obligation</strong> &mdash; where we are required to
+							retain records under applicable law.
 						</li>
 					</ul>
-				</section>
 
-				{/* 3. HOW WE USE YOUR INFORMATION */}
-				<section className='mb-sm'>
-					<h6>3&nbsp;&ndash; How We Use Information</h6>
-					<ul className='list-disc list-inside space-y-0.5 mt-0.75 text-paragraph-sm'>
-						<li>Provide and maintain the site and any contractual services.</li>
-						<li>Respond to inquiries, comments, and requests.</li>
+					<h4 className='mb-[0.75rem]'>3. How We Use Information</h4>
+					<ul className='text-paragraph mb-[2rem] space-y-[0.5rem] list-disc pl-[1.25rem]'>
 						<li>
-							Send administrative information, product updates, or promotional
-							messages{' '}
-							<span className='text-caption italic'>
-								(you can opt out any time)
-							</span>
-							.
+							To respond to inquiries about log home packages, floor plans, and
+							pricing.
 						</li>
 						<li>
-							Analyze usage to improve functionality, security, and user
-							experience.
-						</li>
-						<li>Comply with legal obligations and enforce our terms.</li>
-					</ul>
-				</section>
-
-				{/* 4. COOKIES & TRACKING */}
-				<section className='mb-sm'>
-					<h6>4&nbsp;&ndash; Cookies &amp; Similar Technologies</h6>
-					<p className='mt-0.75 text-paragraph-sm'>
-						We and our service providers use cookies, pixels, and local storage
-						to recognize your browser, improve site performance, and measure
-						marketing effectiveness. You can disable cookies in your browser,
-						but some features may not function properly.
-					</p>
-				</section>
-
-				{/* 5. DISCLOSURES */}
-				<section className='mb-sm'>
-					<h6>5&nbsp;&ndash; Sharing of Information</h6>
-					<p className='mt-0.75 text-paragraph-sm'>
-						We do not sell or rent personal data. We share it only with:
-					</p>
-					<ul className='list-disc list-inside space-y-0.5 mt-0.75 text-paragraph-sm'>
-						<li>
-							<strong>Service providers</strong> who perform functions on our
-							behalf (hosting, email delivery, payment processing, analytics)
-							and who are bound by confidentiality agreements.
+							To prepare quotes and coordinate delivery for owner-builders and
+							contractors.
 						</li>
 						<li>
-							<strong>Authorities or other parties</strong> when required by
-							law, court order, or to protect our rights, property, or safety.
+							To send you information, plans, or documents you have requested.
 						</li>
 						<li>
-							<strong>Successors</strong> in the event of a merger, acquisition,
-							or other business transfer, subject to the terms of this Policy.
+							To understand how visitors use the site so we can improve it.
+						</li>
+						<li>
+							To maintain the security and proper functioning of the website.
+						</li>
+						<li>
+							To comply with legal obligations and to establish or defend legal
+							claims.
 						</li>
 					</ul>
-				</section>
 
-				{/* 6. DATA RETENTION */}
-				<section className='mb-sm'>
-					<h6>6&nbsp;&ndash; Data Retention</h6>
-					<p className='mt-0.75 text-paragraph-sm'>
-						We keep personal data only as long as necessary for the purposes
-						described above, unless a longer period is required by law.
+					<h4 className='mb-[0.75rem]'>
+						4. Cookies &amp; Similar Technologies
+					</h4>
+					<p className='text-paragraph mb-[1rem]'>
+						We use cookies and similar technologies to keep the site working
+						correctly and to understand how it is used. These fall into two
+						categories: essential cookies, which are required for basic site
+						functionality, and analytics cookies, which help us measure traffic
+						and page performance in aggregate.
 					</p>
-				</section>
+					<p className='text-paragraph-sm mb-[2rem]'>
+						You can control or delete cookies through your browser settings.
+						Blocking cookies may affect how parts of the site behave.
+					</p>
 
-				{/* 7. INTERNATIONAL TRANSFERS */}
-				<section className='mb-sm'>
-					<h6>7&nbsp;&ndash; International Transfers</h6>
-					<p className='mt-0.75 text-paragraph-sm'>
-						We are headquartered in {businessLocation} and may transfer data to
-						service providers located in other countries. Where we do so, we
-						rely on approved legal mechanisms such as Standard Contractual
-						Clauses or adequacy decisions.
+					<h4 className='mb-[0.75rem]'>5. Sharing of Information</h4>
+					<p className='text-paragraph mb-[1rem]'>
+						{`We do not sell or rent your personal information. We share information only with service providers who help us operate this website, and only as needed for them to do that work:`}
 					</p>
-				</section>
-
-				{/* 8. YOUR RIGHTS */}
-				<section className='mb-sm'>
-					<h6>8&nbsp;&ndash; Your Privacy Rights</h6>
-					<p className='mt-0.75 text-paragraph-sm'>
-						Depending on your jurisdiction, you may have the right to:
-					</p>
-					<ul className='list-disc list-inside space-y-0.5 mt-0.75 text-paragraph-sm'>
-						<li>Access, correct, or delete your personal information.</li>
-						<li>Object to or restrict certain processing.</li>
-						<li>Receive a portable copy of your data.</li>
+					<ul className='text-paragraph mb-[1rem] space-y-[0.5rem] list-disc pl-[1.25rem]'>
 						<li>
-							Opt out of sale or sharing of personal information (California
-							residents).
+							<strong>Vercel</strong> &mdash; website hosting and delivery.
 						</li>
 						<li>
-							Lodge a complaint with your local data protection authority.
+							<strong>Google Analytics</strong> &mdash; website traffic and
+							usage measurement.
+						</li>
+						<li>
+							<strong>Google (Gmail)</strong> &mdash; delivery and storage of
+							contact form submissions and email correspondence.
+						</li>
+						<li>
+							<strong>Our content management system</strong> &mdash; a custom
+							system used to publish and maintain the content on this site.
 						</li>
 					</ul>
-					<p className='mt-0.75 text-paragraph-sm'>
-						To exercise any of these rights, contact us at&nbsp;
-						<a
-							href={`mailto:${contactEmail}`}
-							className='font-semibold underline text-blue-light hover:opacity-80'
-						>
+					<p className='text-paragraph mb-[2rem]'>
+						We may also disclose information if required by law, subpoena, or
+						other legal process, or where we believe disclosure is necessary to
+						protect our rights, your safety, or the safety of others.
+					</p>
+
+					<h4 className='mb-[0.75rem]'>6. Data Retention</h4>
+					<p className='text-paragraph mb-[2rem]'>
+						We keep inquiry and correspondence records for as long as needed to
+						serve you and to keep accurate business records &mdash; buying or
+						building a log home is a long decision, and a conversation may pick
+						back up months later. Analytics data is retained according to the
+						retention settings of our analytics provider. When information is no
+						longer needed, we delete it or remove identifying details.
+					</p>
+
+					<h4 className='mb-[0.75rem]'>7. International Transfers</h4>
+					<p className='text-paragraph mb-[2rem]'>
+						We operate in {businessLocation}, and our service providers may
+						store or process information in the United States or other
+						countries. If you access this site from outside the United States,
+						you understand that your information will be transferred to and
+						processed in the United States, where data protection laws may
+						differ from those in your country. We take reasonable steps to
+						protect your information wherever it is processed.
+					</p>
+
+					<h4 className='mb-[0.75rem]'>8. Your Privacy Rights</h4>
+					<p className='text-paragraph mb-[1rem]'>
+						Depending on where you live, you may have the right to request
+						access to the personal information we hold about you, to request
+						correction or deletion of that information, to object to or restrict
+						certain processing, to request a copy of your information in a
+						portable format, and to withdraw consent you previously gave.
+					</p>
+					<p className='text-paragraph mb-[1rem]'>
+						{`California residents have the right to know what personal information is collected, to request deletion, and to opt out of the "sale" or "sharing" of personal information. We do not sell or share personal information as those terms are defined under the California Consumer Privacy Act, and we will not discriminate against you for exercising any privacy right.`}
+					</p>
+					<p className='text-paragraph-sm mb-[2rem]'>
+						To make a request, email us at{' '}
+						<a href={`mailto:${contactEmail}`} className={linkClass}>
 							{contactEmail}
 						</a>
-						.
+						. We may need to verify your identity before acting on a request.
 					</p>
-				</section>
 
-				{/* 9. CHILDREN'S PRIVACY */}
-				<section className='mb-sm'>
-					<h6>{`9\u00A0\u2013 Children's Privacy`}</h6>
-					<p className='mt-0.75 text-paragraph-sm'>
-						Our site is not directed to children under 13 (or other age as
-						required by local law). We do not knowingly collect personal
-						information from children. If you believe we have inadvertently done
-						so, please contact us and we will delete it promptly.
+					<h4 className='mb-[0.75rem]'>9. Children&rsquo;s Privacy</h4>
+					<p className='text-paragraph mb-[2rem]'>
+						This website is intended for adults. We do not knowingly collect
+						personal information from children under 13. If you believe a child
+						has provided us information, contact us and we will delete it.
 					</p>
-				</section>
 
-				{/* 10. SECURITY */}
-				<section className='mb-sm'>
-					<h6>10&nbsp;&ndash; Security</h6>
-					<p className='mt-0.75 text-paragraph-sm'>
-						We implement reasonable technical and organizational measures to
-						protect your personal information. However, no method of
-						transmission over the internet is 100&#37; secure.
+					<h4 className='mb-[0.75rem]'>10. Security</h4>
+					<p className='text-paragraph mb-[2rem]'>
+						We use reasonable technical and organizational safeguards to protect
+						the information we collect, including encrypted connections (HTTPS)
+						across the site and limited access to inquiry records. No method of
+						transmission or storage is completely secure, so we cannot guarantee
+						absolute security.
 					</p>
-				</section>
 
-				{/* 11. CHANGES */}
-				<section className='mb-sm'>
-					<h6>11&nbsp;&ndash; Changes to This Policy</h6>
-					<p className='mt-0.75 text-paragraph-sm'>
-						{`We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated "Effective Date." Continued use of the site after such changes constitutes acceptance.`}
+					<h4 className='mb-[0.75rem]'>11. Changes to This Policy</h4>
+					<p className='text-paragraph mb-[2rem]'>
+						We may update this policy from time to time to reflect changes in
+						our practices or legal requirements. When we do, we will revise the
+						effective date at the top of this page. Continued use of the site
+						after an update means you accept the revised policy.
 					</p>
-				</section>
 
-				{/* 12. CONTACT */}
-				<section>
-					<h6>12&nbsp;&ndash; Contact Us</h6>
-					<p className='mt-0.75 text-paragraph-sm'>
-						Questions or concerns? Email us at&nbsp;
-						<a
-							href={`mailto:${contactEmail}`}
-							className='font-semibold underline text-blue-light hover:opacity-80'
-						>
+					<h4 className='mb-[0.75rem]'>12. Contact Us</h4>
+					<p className='text-paragraph mb-[1rem]'>
+						Questions about this policy or about the information we hold? Reach
+						out directly:
+					</p>
+					<p className='text-paragraph mb-[0.5rem]'>
+						Email:{' '}
+						<a href={`mailto:${contactEmail}`} className={linkClass}>
 							{contactEmail}
 						</a>
-						.
 					</p>
-				</section>
-			</article>
-		</section>
+					<p className='text-paragraph'>
+						Phone:{' '}
+						<a
+							href={`tel:${contactPhone.replace(/[^0-9+]/g, '')}`}
+							className={linkClass}
+						>
+							{contactPhone}
+						</a>
+					</p>
+				</article>
+			</section>
+		</>
 	);
 }

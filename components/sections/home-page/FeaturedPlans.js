@@ -1,6 +1,7 @@
 import HeadingWithOverline from '@/components/ui/HeadingWithOverline';
 import FloorPlanCard from '../shared/FloorPlanCard';
 import Link from 'next/link';
+import Stagger, { StaggerItem } from '@/components/animations/Stagger';
 
 const FeaturedPlans = ({ data }) => {
 	const { overline, heading, subheadline, plans } = data;
@@ -21,18 +22,22 @@ const FeaturedPlans = ({ data }) => {
 				heading={heading}
 				body={subheadline}
 			/>
-			<div className='grid gap-x-1 gap-y-1.5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-1.5 lg:gap-y-3'>
+			<Stagger
+				className='grid gap-x-1 gap-y-1.5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-1.5 lg:gap-y-3'
+				amount={0.1}
+			>
 				{plans.map((plan, i) => (
-					<Link
-						key={`${plan._id}-${i}`}
-						href={`/floor-plans/${plan.slug}`}
-						className='block'
-						data-event={`Floor Plan Card - ${plan.name} CTA`}
-					>
-						<FloorPlanCard data={plan} />
-					</Link>
+					<StaggerItem key={`${plan._id}-${i}`}>
+						<Link
+							href={`/floor-plans/${plan.slug}`}
+							className='block'
+							data-event={`Floor Plan Card - ${plan.name} CTA`}
+						>
+							<FloorPlanCard data={plan} />
+						</Link>
+					</StaggerItem>
 				))}
-			</div>
+			</Stagger>
 		</div>
 	);
 };

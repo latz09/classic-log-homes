@@ -15,6 +15,7 @@ import Reviews from '@/components/sections/shared/Reviews';
 import ContactSection from '@/components/sections/shared/ContactSection';
 import MillWork from '@/components/sections/home-page/MillWork';
 import LandingHeroMobile from '@/components/sections/home-page/LandingHeroMobile';
+import Reveal from '@/components/animations/Reveal';
 
 export async function generateMetadata() {
 	return await BPM({ slug: '/', query: Q });
@@ -37,6 +38,7 @@ export default async function Home() {
 			<NavigationContainer />
 
 			<PageContainer>
+				{/* Hero stays unwrapped — it's your LCP element. */}
 				<div className='hidden lg:block'>
 					<LandingHero data={hero} />
 				</div>
@@ -46,23 +48,46 @@ export default async function Home() {
 				</div>
 
 				<div className='max-container relative z-20 -mt-[5vh] 3xl:-mt-[5vh] space-y-5 lg:space-y-10'>
-					<Pillars data={pillars} />
-					<WhatYourBuying data={whatYoureBuying} />
-					<FeaturedPlans data={featuredPlans} />
-					<Process
-						overline={process.overline}
-						heading={process.heading}
-						steps={process.steps}
-					/>
-					<MillWork
-						image={process.millImage}
-						overline={process.builtOverline}
-						heading={process.builtHeading}
-						body={process.builtBody}
-					/>
-					<Support data={support} />
-					<Reviews data={reviews} />
-					<ContactSection data={contact} />
+					<Reveal>
+						<Pillars data={pillars} />
+					</Reveal>
+
+					<Reveal>
+						<WhatYourBuying data={whatYoureBuying} />
+					</Reveal>
+
+					<div>
+						<FeaturedPlans data={featuredPlans} />
+					</div>
+
+					<div >
+						<Process
+							overline={process.overline}
+							heading={process.heading}
+							steps={process.steps}
+						/>
+					</div>
+
+					<Reveal amount={0.1} y={28} duration={0.7}>
+						<MillWork
+							image={process.millImage}
+							overline={process.builtOverline}
+							heading={process.builtHeading}
+							body={process.builtBody}
+						/>
+					</Reveal>
+
+					<Reveal>
+						<Support data={support} />
+					</Reveal>
+
+					<Reveal amount={0.1}>
+						<Reviews data={reviews} />
+					</Reveal>
+
+					<Reveal amount={0.1}>
+						<ContactSection data={contact} />
+					</Reveal>
 				</div>
 			</PageContainer>
 		</>
