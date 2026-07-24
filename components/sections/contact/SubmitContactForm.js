@@ -17,6 +17,7 @@ const SubmitContactForm = ({
 		floorPlan: currentPlanName || '',
 		description: '',
 		projectType: '',
+		website: '', // honeypot
 	});
 
 	const [isLoading, setIsLoading] = useState(false);
@@ -61,6 +62,7 @@ const SubmitContactForm = ({
 					floorPlan: currentPlanName || '',
 					description: '',
 					projectType: '',
+					website: '', // honeypot
 				});
 				setSuccess('Message sent successfully!');
 			} else {

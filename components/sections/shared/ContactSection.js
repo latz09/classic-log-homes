@@ -1,4 +1,4 @@
-// /components/sections/shared/ContactSection.js
+
 import { fetchContent as fc } from '@/utils/cms/fetchContent';
 import { FETCH_FLOOR_PLAN_NAMES_QUERY as PLANS_Q } from '@/data/queries/floor-plans/FETCH_FLOOR_PLAN_NAMES_QUERY';
 

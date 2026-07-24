@@ -31,13 +31,13 @@ export const clientConfig = {
 		{
 			name: 'description',
 			label: 'Project Details',
-			required: false,
+			required: true,
 			type: 'textarea',
 		},
 		{
 			name: 'projectType',
 			label: 'Project Type',
-			required: false,
+			required: true,
 			type: 'radio',
 			options: [
 				{ value: 'owner_builder', label: "I'm an owner-builder" },

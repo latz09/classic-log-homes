@@ -13,6 +13,30 @@ export default async function handler(req, res) {
 		return res.status(405).end(`Method ${req.method} Not Allowed`);
 	}
 
+	// Honeypot check — real visitors never see or fill this field.
+	if (req.body.website) {
+		try {
+			await sanityClient.create({
+				_type: 'contactForm',
+				name: req.body.name || 'Not provided',
+				email: req.body.email || 'Not provided',
+				phoneNumber: req.body.phoneNumber || 'Not provided',
+				floorPlan: req.body.floorPlan || 'Not provided',
+				description: req.body.description || 'Not provided',
+				projectType: req.body.projectType || 'Not provided',
+				isSpam: true,
+				sentAt: new Date().toISOString(),
+			});
+		} catch (sanityError) {
+			console.error('Error logging spam submission:', sanityError);
+		}
+
+		// Return a normal success so bots don't learn they were caught and adapt.
+		return res
+			.status(200)
+			.json({ success: true, message: 'Form submitted successfully' });
+	}
+
 	const requiredFields = clientConfig.formFields.filter((f) => f.required);
 	const missingFields = requiredFields.filter((f) => !req.body[f.name]);
 

@@ -97,6 +97,28 @@ const ContactForm = ({
 						className={`${baseInputClasses} resize-none`}
 					/>
 				</div>
+				<div
+					aria-hidden='true'
+					style={{
+						position: 'absolute',
+						left: '-9999px',
+						top: '-9999px',
+						height: 0,
+						width: 0,
+						overflow: 'hidden',
+					}}
+				>
+					<label htmlFor='website'>Leave this field blank</label>
+					<input
+						type='text'
+						id='website'
+						name='website'
+						value={formData.website}
+						onChange={handleInputChange}
+						tabIndex={-1}
+						autoComplete='off'
+					/>
+				</div>
 
 				<div className='md:col-span-2'>
 					<span className='text-caption font-semibold block mb-0.5 text-black/80'>
@@ -109,7 +131,9 @@ const ContactForm = ({
 								<label
 									key={option.value}
 									className={`flex items-center gap-0.5 px-1 py-0.5 border rounded text-paragraph-sm text-black cursor-pointer transition-colors duration-200  ${
-										isSelected ? 'border-black bg-darkGold text-snow' : 'border-black/20 hover:bg-gold'
+										isSelected
+											? 'border-black bg-darkGold text-snow'
+											: 'border-black/20 hover:bg-gold'
 									}`}
 								>
 									<input
