@@ -35,9 +35,11 @@ export async function generateMetadata({ params }) {
 
 const FloorPlan = async ({ params }) => {
 	const { slug } = await params;
-	const data = await fc(Q, { slug });
+	const raw = await fc(Q, { slug });
 
-	if (!data) notFound();
+	if (!raw) notFound();
+
+	const data = { ...raw, startingPrice: raw.startingPrice?.trim() || null };
 
 	return (
 		<>
@@ -77,7 +79,7 @@ const FloorPlan = async ({ params }) => {
 						<Details
 							name={data.name}
 							overline='Details'
-							body={`The ${data.startingPrice} starting price covers the log package. Here's what's included and what you'll source locally.`}
+							startingPrice={data.startingPrice}
 							packageIncluded={data.packageIncluded}
 							packageNotIncluded={data.packageNotIncluded}
 							packageFootnote={data.packageFootnote}

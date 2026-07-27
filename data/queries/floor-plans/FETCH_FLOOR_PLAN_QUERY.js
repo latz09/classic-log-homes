@@ -3,7 +3,10 @@ export const FETCH_FLOOR_PLAN_QUERY = `*[_type == "floorPlan" && slug.current ==
   name,
   "slug": slug.current,
   category,
-  startingPrice,
+  "startingPrice": select(
+    startingPrice match "*[0-9a-zA-Z]*" => startingPrice,
+    null
+  ),
   shortDescription,
   heroIntro,
   specs{

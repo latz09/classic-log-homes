@@ -27,12 +27,20 @@ export default async function Home() {
 		hero,
 		pillars,
 		whatYoureBuying,
-		featuredPlans,
 		process,
 		support,
 		reviews,
 		contact,
 	} = data;
+
+	const featuredPlans = {
+		...data.featuredPlans,
+		plans: (data.featuredPlans?.plans || []).map((plan) => ({
+			...plan,
+			startingPrice: plan.startingPrice?.trim() || null,
+		})),
+	};
+
 	return (
 		<>
 			<NavigationContainer />

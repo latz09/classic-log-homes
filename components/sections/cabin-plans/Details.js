@@ -4,11 +4,15 @@ import PackageBox from '@/components/ui/PackageBox';
 const Details = ({
 	name,
 	overline,
-	body,
+	startingPrice,
 	packageIncluded,
 	packageNotIncluded,
 	packageFootnote,
 }) => {
+	const body = startingPrice?.trim()
+	? `The ${startingPrice} starting price covers the log package. Here's what's included and what you'll source locally.`
+	: `Here's what's included in the log package and what you'll source locally.`;
+
 	return (
 		<div className='space-y-1.5 lg:space-y-3'>
 			<HeadingWithOverline

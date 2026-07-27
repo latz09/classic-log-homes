@@ -42,7 +42,10 @@ export const FETCH_HOME_PAGE_QUERY = `*[_type == "homePage" && _id == "homePage"
       name,
       "slug": slug.current,
       category,
-      startingPrice,
+      "startingPrice": select(
+    startingPrice match "*[0-9a-zA-Z]*" => startingPrice,
+    null
+  ),
       shortDescription,
       specs{
         squareFeet,
