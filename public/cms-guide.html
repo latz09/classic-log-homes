@@ -1,0 +1,2135 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="robots" content="noindex, nofollow" />
+		<title>Content Management Guide &mdash; Classic Log Homes, Inc.</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&amp;family=DM+Sans:wght@300;400;500;600&amp;display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			:root {
+				--black: #1e1e1e;
+				--black-deep: #161616;
+				--black-sidebar: #131313;
+				--surface: #262626;
+				--surface-2: #2d2d2d;
+				--surface-raised: #232323;
+				--gold: #cfa240;
+				--gold-soft: #d9b46a;
+				--dark-gold: #704d02;
+				--cream: #fff8e3;
+				--cream-muted: rgba(255, 248, 227, 0.72);
+				--cream-faint: rgba(255, 248, 227, 0.42);
+				--snow: #ffffff;
+				--line: rgba(207, 162, 64, 0.16);
+				--line-soft: rgba(255, 248, 227, 0.1);
+				--tip-bg: rgba(207, 162, 64, 0.09);
+				--tip-border: #cfa240;
+				--warn-bg: rgba(217, 130, 43, 0.11);
+				--warn-border: #d9822b;
+				--radius: 6px;
+				--sidebar-width: 268px;
+			}
+			*,
+			*::before,
+			*::after {
+				box-sizing: border-box;
+				margin: 0;
+				padding: 0;
+			}
+			html {
+				scroll-behavior: smooth;
+			}
+			body {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 16px;
+				line-height: 1.7;
+				color: var(--cream-muted);
+				background: var(--black);
+				display: flex;
+				min-height: 100vh;
+			}
+
+			/* ─── SIDEBAR ─────────────────────────────────────── */
+			.sidebar {
+				width: var(--sidebar-width);
+				background: var(--black-sidebar);
+				position: fixed;
+				top: 0;
+				left: 0;
+				height: 100vh;
+				overflow-y: auto;
+				z-index: 100;
+				display: flex;
+				flex-direction: column;
+				border-right: 1px solid var(--line);
+				transition: transform 0.3s ease;
+			}
+			.sidebar::-webkit-scrollbar {
+				width: 4px;
+			}
+			.sidebar::-webkit-scrollbar-thumb {
+				background: rgba(207, 162, 64, 0.25);
+				border-radius: 4px;
+			}
+			.sidebar-logo {
+				padding: 28px 24px 20px;
+				border-bottom: 1px solid var(--line-soft);
+			}
+			.sidebar-logo-title {
+				font-family: 'Cormorant Garamond', serif;
+				font-size: 18px;
+				font-weight: 600;
+				color: var(--gold);
+				line-height: 1.3;
+				letter-spacing: 0.01em;
+			}
+			.sidebar-logo-sub {
+				font-size: 11px;
+				color: var(--cream-faint);
+				text-transform: uppercase;
+				letter-spacing: 0.14em;
+				margin-top: 5px;
+				font-weight: 500;
+			}
+			.sidebar-section {
+				padding: 18px 0 8px;
+			}
+			.sidebar-section-label {
+				font-size: 10px;
+				font-weight: 600;
+				text-transform: uppercase;
+				letter-spacing: 0.15em;
+				color: rgba(207, 162, 64, 0.55);
+				padding: 0 24px;
+				margin-bottom: 6px;
+			}
+			.sidebar-link {
+				display: block;
+				padding: 8px 24px;
+				font-size: 13.5px;
+				font-weight: 400;
+				color: var(--cream-muted);
+				text-decoration: none;
+				transition: all 0.15s ease;
+				border-left: 2px solid transparent;
+				line-height: 1.4;
+			}
+			.sidebar-link:hover {
+				color: var(--cream);
+				background: rgba(207, 162, 64, 0.06);
+				border-left-color: rgba(207, 162, 64, 0.4);
+			}
+			.sidebar-link.active {
+				color: var(--gold);
+				background: rgba(207, 162, 64, 0.09);
+				border-left-color: var(--gold);
+				font-weight: 500;
+			}
+			.sidebar-footer {
+				margin-top: auto;
+				padding: 20px 24px;
+				border-top: 1px solid var(--line-soft);
+				font-size: 11.5px;
+				color: var(--cream-faint);
+				line-height: 1.5;
+			}
+			.sidebar-footer a {
+				color: rgba(207, 162, 64, 0.7);
+				text-decoration: none;
+			}
+			.sidebar-footer a:hover {
+				color: var(--gold);
+			}
+
+			/* ─── MAIN ────────────────────────────────────────── */
+			.main {
+				margin-left: var(--sidebar-width);
+				flex: 1;
+				min-width: 0;
+			}
+			.page-header {
+				background: var(--black-deep);
+				padding: 64px 64px 56px;
+				position: relative;
+				overflow: hidden;
+				border-bottom: 1px solid var(--line);
+			}
+			.page-header::before {
+				content: '';
+				position: absolute;
+				top: -80px;
+				right: -80px;
+				width: 380px;
+				height: 380px;
+				background: radial-gradient(
+					circle,
+					rgba(207, 162, 64, 0.1) 0%,
+					transparent 70%
+				);
+				pointer-events: none;
+			}
+			.header-logo {
+				height: 52px;
+				width: auto;
+				margin-bottom: 24px;
+				display: block;
+			}
+			.header-eyebrow {
+				font-size: 11px;
+				font-weight: 600;
+				text-transform: uppercase;
+				letter-spacing: 0.18em;
+				color: rgba(207, 162, 64, 0.6);
+				margin-bottom: 14px;
+			}
+			.header-title {
+				font-family: 'Cormorant Garamond', serif;
+				font-size: 52px;
+				font-weight: 600;
+				color: var(--cream);
+				line-height: 1.1;
+				margin-bottom: 16px;
+				letter-spacing: -0.01em;
+			}
+			.header-sub {
+				font-size: 16px;
+				color: var(--cream-muted);
+				max-width: 520px;
+				line-height: 1.6;
+				font-weight: 300;
+			}
+			.header-meta {
+				margin-top: 28px;
+				display: flex;
+				gap: 28px;
+				flex-wrap: wrap;
+			}
+			.header-meta-item {
+				font-size: 12.5px;
+				color: var(--cream-faint);
+			}
+			.header-meta-item strong {
+				color: rgba(207, 162, 64, 0.75);
+				font-weight: 500;
+			}
+			.header-meta-item a {
+				color: var(--cream-muted);
+				font-weight: 400;
+			}
+			.print-btn {
+				position: absolute;
+				top: 32px;
+				right: 64px;
+				background: transparent;
+				border: 1px solid rgba(207, 162, 64, 0.4);
+				color: var(--gold);
+				font-family: 'DM Sans', sans-serif;
+				font-size: 13px;
+				font-weight: 500;
+				padding: 8px 16px;
+				border-radius: 4px;
+				cursor: pointer;
+				letter-spacing: 0.04em;
+				transition: all 0.15s ease;
+				display: flex;
+				align-items: center;
+				gap: 7px;
+			}
+			.print-btn:hover {
+				background: rgba(207, 162, 64, 0.1);
+				border-color: var(--gold);
+				color: var(--gold-soft);
+			}
+			.content {
+				padding: 56px 64px 80px;
+				max-width: 880px;
+			}
+
+			/* ─── SECTIONS ────────────────────────────────────── */
+			.doc-section {
+				margin-bottom: 72px;
+				scroll-margin-top: 32px;
+			}
+			.section-badge {
+				display: inline-flex;
+				align-items: center;
+				background: var(--gold);
+				color: var(--black-deep);
+				font-size: 11px;
+				font-weight: 700;
+				text-transform: uppercase;
+				letter-spacing: 0.1em;
+				padding: 4px 12px;
+				border-radius: 20px;
+				margin-bottom: 20px;
+			}
+			.section-heading {
+				font-family: 'Cormorant Garamond', serif;
+				font-size: 38px;
+				font-weight: 600;
+				color: var(--gold);
+				letter-spacing: -0.01em;
+				line-height: 1.15;
+				margin-bottom: 8px;
+				padding-bottom: 16px;
+				border-bottom: 2px solid var(--gold);
+			}
+			.section-intro {
+				font-size: 15.5px;
+				color: var(--cream-muted);
+				margin-bottom: 32px;
+				max-width: 660px;
+				line-height: 1.7;
+			}
+			.subsection {
+				margin-bottom: 48px;
+				scroll-margin-top: 32px;
+			}
+			.subsection-heading {
+				font-size: 19px;
+				font-weight: 600;
+				color: var(--cream);
+				margin-bottom: 16px;
+				display: flex;
+				align-items: center;
+				gap: 10px;
+			}
+			.subsection-heading::before {
+				content: '';
+				display: inline-block;
+				width: 3px;
+				height: 20px;
+				background: var(--gold);
+				border-radius: 2px;
+				flex-shrink: 0;
+			}
+			.group-heading {
+				font-size: 14px;
+				font-weight: 600;
+				color: var(--gold);
+				margin: 28px 0 12px;
+				text-transform: uppercase;
+				letter-spacing: 0.06em;
+			}
+
+			/* ─── FIELD TABLES ────────────────────────────────── */
+			.field-table {
+				width: 100%;
+				border-collapse: collapse;
+				margin-bottom: 16px;
+				border-radius: var(--radius);
+				overflow: hidden;
+				border: 1px solid var(--line);
+			}
+			.field-table tr:not(:last-child) {
+				border-bottom: 1px solid var(--line);
+			}
+			.field-label {
+				background: var(--surface-2);
+				padding: 11px 16px;
+				font-size: 13px;
+				font-weight: 600;
+				color: var(--gold);
+				vertical-align: top;
+				width: 200px;
+				border-right: 1px solid var(--line);
+			}
+			.field-desc {
+				padding: 11px 16px;
+				font-size: 14px;
+				color: var(--cream-muted);
+				vertical-align: top;
+				background: var(--surface-raised);
+				line-height: 1.6;
+			}
+			.field-limit {
+				display: inline-block;
+				margin-top: 5px;
+				font-size: 11.5px;
+				color: var(--gold-soft);
+				background: rgba(207, 162, 64, 0.12);
+				border-radius: 20px;
+				padding: 1px 9px;
+				font-weight: 500;
+			}
+			.field-req {
+				display: inline-block;
+				margin-top: 5px;
+				margin-left: 5px;
+				font-size: 11.5px;
+				color: #e0956a;
+				background: rgba(224, 149, 106, 0.13);
+				border-radius: 20px;
+				padding: 1px 9px;
+				font-weight: 500;
+			}
+			.field-lock {
+				display: inline-block;
+				margin-top: 5px;
+				margin-left: 5px;
+				font-size: 11.5px;
+				color: var(--cream-faint);
+				background: rgba(255, 248, 227, 0.08);
+				border-radius: 20px;
+				padding: 1px 9px;
+				font-weight: 500;
+			}
+
+			/* ─── CALLOUTS ────────────────────────────────────── */
+			.callout {
+				border-radius: var(--radius);
+				padding: 14px 18px;
+				margin: 20px 0;
+				font-size: 14px;
+				line-height: 1.65;
+				border-left-width: 3px;
+				border-left-style: solid;
+			}
+			.callout-tip {
+				background: var(--tip-bg);
+				border-left-color: var(--tip-border);
+				color: var(--cream);
+			}
+			.callout-warn {
+				background: var(--warn-bg);
+				border-left-color: var(--warn-border);
+				color: #f5d9ac;
+			}
+			.callout-icon {
+				font-size: 15px;
+				margin-right: 6px;
+			}
+			.callout strong {
+				font-weight: 600;
+				color: var(--gold-soft);
+			}
+			.callout-warn strong {
+				color: #e9a75c;
+			}
+
+			/* ─── STUDIO DEEP LINK ────────────────────────────── */
+			.studio-link {
+				display: inline-flex;
+				align-items: center;
+				gap: 9px;
+				background: var(--gold);
+				color: var(--black-deep);
+				font-size: 14px;
+				font-weight: 600;
+				text-decoration: none;
+				padding: 11px 20px;
+				border-radius: var(--radius);
+				margin: 4px 0 20px;
+				transition: all 0.15s ease;
+			}
+			.studio-link:hover {
+				background: var(--gold-soft);
+				color: var(--black-deep);
+				transform: translateY(-1px);
+			}
+			.studio-link svg {
+				flex-shrink: 0;
+			}
+
+			/* ─── STEPS & BULLETS ─────────────────────────────── */
+			.steps {
+				counter-reset: steps;
+				list-style: none;
+				margin: 16px 0 24px;
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
+			}
+			.steps li {
+				counter-increment: steps;
+				display: flex;
+				align-items: flex-start;
+				gap: 14px;
+				font-size: 15px;
+				line-height: 1.6;
+				color: var(--cream-muted);
+			}
+			.steps li::before {
+				content: counter(steps);
+				flex-shrink: 0;
+				width: 26px;
+				height: 26px;
+				background: var(--gold);
+				color: var(--black-deep);
+				border-radius: 50%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 12px;
+				font-weight: 700;
+				margin-top: 1px;
+			}
+			.steps li > * {
+				min-width: 0;
+			}
+			.bullets {
+				list-style: none;
+				margin: 12px 0 20px 0;
+				display: flex;
+				flex-direction: column;
+				gap: 8px;
+			}
+			.bullets li {
+				display: flex;
+				align-items: flex-start;
+				gap: 10px;
+				font-size: 15px;
+				line-height: 1.6;
+				color: var(--cream-muted);
+			}
+			.bullets li::before {
+				content: '';
+				flex-shrink: 0;
+				width: 5px;
+				height: 5px;
+				background: var(--gold);
+				border-radius: 50%;
+				margin-top: 9px;
+			}
+			.doc-p {
+				font-size: 15.5px;
+				line-height: 1.75;
+				color: var(--cream-muted);
+				margin-bottom: 16px;
+				max-width: 700px;
+			}
+			strong {
+				font-weight: 600;
+				color: var(--cream);
+			}
+			a {
+				color: var(--gold);
+				font-weight: 500;
+			}
+			a:hover {
+				color: var(--gold-soft);
+			}
+			code {
+				background: var(--surface);
+				padding: 1px 6px;
+				border-radius: 3px;
+				font-family: 'SF Mono', 'Fira Code', monospace;
+				font-size: 13px;
+				color: var(--gold-soft);
+				border: 1px solid var(--line);
+			}
+			.divider {
+				border: none;
+				border-top: 1px solid var(--line);
+				margin: 48px 0;
+			}
+
+			/* ─── HELP CARD ───────────────────────────────────── */
+			.help-card {
+				background: var(--black-deep);
+				border: 1px solid var(--line);
+				border-radius: 10px;
+				padding: 36px 40px;
+				color: var(--cream);
+				margin-top: 32px;
+			}
+			.help-card h3 {
+				font-family: 'Cormorant Garamond', serif;
+				font-size: 28px;
+				font-weight: 600;
+				margin-bottom: 12px;
+				color: var(--gold);
+			}
+			.help-card p {
+				font-size: 15px;
+				color: var(--cream-muted);
+				margin-bottom: 20px;
+				line-height: 1.65;
+			}
+			.help-links {
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
+				margin-top: 20px;
+			}
+			.help-link-item {
+				display: flex;
+				align-items: center;
+				gap: 12px;
+				font-size: 15px;
+			}
+			.help-link-label {
+				font-weight: 600;
+				color: rgba(207, 162, 64, 0.6);
+				width: 60px;
+				font-size: 12px;
+				text-transform: uppercase;
+				letter-spacing: 0.08em;
+			}
+			.help-link-item a {
+				color: var(--cream);
+				text-decoration: none;
+				border-bottom: 1px solid rgba(207, 162, 64, 0.4);
+				transition: border-color 0.15s;
+			}
+			.help-link-item a:hover {
+				border-bottom-color: var(--gold);
+			}
+			.help-card-tagline {
+				margin-top: 28px;
+				padding-top: 20px;
+				border-top: 1px solid var(--line-soft);
+				font-style: italic;
+				font-size: 14px;
+				color: var(--cream-faint);
+			}
+
+			/* ─── TIPS GRID ───────────────────────────────────── */
+			.tips-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 14px;
+				margin-top: 24px;
+			}
+			.tip-card {
+				background: var(--surface-raised);
+				border: 1px solid var(--line);
+				border-radius: var(--radius);
+				padding: 18px 20px;
+				font-size: 14px;
+				line-height: 1.6;
+				color: var(--cream-muted);
+			}
+			.tip-card-icon {
+				font-size: 20px;
+				margin-bottom: 8px;
+				display: block;
+			}
+			.tip-card strong {
+				display: block;
+				font-size: 13px;
+				font-weight: 600;
+				color: var(--gold);
+				margin-bottom: 4px;
+				text-transform: uppercase;
+				letter-spacing: 0.06em;
+			}
+
+			/* ─── MOBILE TOGGLE ───────────────────────────────── */
+			.mobile-toggle {
+				display: none;
+				position: fixed;
+				bottom: 24px;
+				right: 24px;
+				z-index: 200;
+				background: var(--gold);
+				color: var(--black-deep);
+				border: none;
+				width: 52px;
+				height: 52px;
+				border-radius: 50%;
+				font-size: 20px;
+				cursor: pointer;
+				box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+				align-items: center;
+				justify-content: center;
+			}
+			.sidebar-overlay {
+				display: none;
+				position: fixed;
+				inset: 0;
+				background: rgba(0, 0, 0, 0.6);
+				z-index: 99;
+			}
+
+			@media (max-width: 900px) {
+				.sidebar {
+					transform: translateX(-100%);
+				}
+				.sidebar.open {
+					transform: translateX(0);
+				}
+				.main {
+					margin-left: 0;
+				}
+				.mobile-toggle {
+					display: flex;
+				}
+				.sidebar-overlay.visible {
+					display: block;
+				}
+				.page-header {
+					padding: 40px 28px 48px;
+				}
+				.content {
+					padding: 36px 28px 60px;
+				}
+				.header-title {
+					font-size: 36px;
+				}
+				.tips-grid {
+					grid-template-columns: 1fr;
+				}
+				.print-btn {
+					display: none;
+				}
+			}
+
+			@media (max-width: 600px) {
+				.page-header {
+					padding: 32px 20px 40px;
+				}
+				.content {
+					padding: 28px 20px 60px;
+				}
+				.header-title {
+					font-size: 28px;
+				}
+				.steps li::before {
+					margin-top: 2px;
+				}
+				.field-table,
+				.field-table tbody,
+				.field-table tr {
+					display: block;
+				}
+				.field-table tr {
+					margin-bottom: 12px;
+					border: 1px solid var(--line);
+					border-radius: var(--radius);
+					overflow: hidden;
+				}
+				.field-label {
+					display: block;
+					width: 100%;
+					border-right: none;
+					border-bottom: 1px solid var(--line);
+					white-space: normal;
+					font-size: 12px;
+					padding: 8px 12px;
+				}
+				.field-desc {
+					display: block;
+					width: 100%;
+					padding: 10px 12px;
+					font-size: 13.5px;
+				}
+			}
+
+			/* ─── PRINT / PDF (light theme for clean offline copy) ─── */
+			@media print {
+				.sidebar,
+				.sidebar-overlay,
+				.mobile-toggle,
+				.print-btn,
+				.studio-link {
+					display: none !important;
+				}
+				.main {
+					margin-left: 0 !important;
+				}
+				body {
+					background: #ffffff !important;
+					color: #1e1e1e !important;
+					display: block !important;
+				}
+				@page {
+					margin: 0.75in 0.85in;
+				}
+				.page-header {
+					background: #ffffff !important;
+					border-bottom: 2px solid #704d02 !important;
+					padding: 24px 0 20px !important;
+				}
+				.header-logo {
+					filter: brightness(0) saturate(100%) !important;
+					height: 38px !important;
+				}
+				.header-eyebrow {
+					color: #704d02 !important;
+				}
+				.header-title {
+					color: #1e1e1e !important;
+					font-size: 32px !important;
+				}
+				.header-sub,
+				.header-meta-item {
+					color: #444 !important;
+				}
+				.header-meta-item strong,
+				.header-meta-item a {
+					color: #704d02 !important;
+				}
+				.content {
+					padding: 32px 0 !important;
+					max-width: 100% !important;
+				}
+				.section-badge {
+					background: #704d02 !important;
+					color: #fff !important;
+					-webkit-print-color-adjust: exact;
+					print-color-adjust: exact;
+				}
+				.section-heading {
+					color: #704d02 !important;
+					border-bottom-color: #704d02 !important;
+				}
+				.section-intro,
+				.doc-p,
+				.steps li,
+				.bullets li {
+					color: #333 !important;
+				}
+				.subsection-heading {
+					color: #1e1e1e !important;
+				}
+				.subsection-heading::before,
+				.steps li::before,
+				.bullets li::before {
+					background: #704d02 !important;
+					-webkit-print-color-adjust: exact;
+					print-color-adjust: exact;
+				}
+				.steps li::before {
+					color: #fff !important;
+				}
+				.group-heading {
+					color: #704d02 !important;
+				}
+				strong {
+					color: #1e1e1e !important;
+				}
+				a {
+					color: #704d02 !important;
+				}
+				code {
+					background: #f1ece0 !important;
+					color: #704d02 !important;
+					border-color: #d9cdb8 !important;
+				}
+				.field-table {
+					border-color: #d9cdb8 !important;
+					page-break-inside: auto;
+					break-inside: auto;
+				}
+				.field-table tr {
+					border-color: #d9cdb8 !important;
+					page-break-inside: avoid;
+					break-inside: avoid;
+				}
+				.field-label {
+					background: #f4efe4 !important;
+					color: #704d02 !important;
+					border-color: #d9cdb8 !important;
+					-webkit-print-color-adjust: exact;
+					print-color-adjust: exact;
+				}
+				.field-desc {
+					background: #ffffff !important;
+					color: #333 !important;
+				}
+				.field-limit {
+					background: #f1ece0 !important;
+					color: #704d02 !important;
+				}
+				.field-req {
+					background: #f6e5d8 !important;
+					color: #a5501f !important;
+				}
+				.field-lock {
+					background: #eee !important;
+					color: #555 !important;
+				}
+				.callout {
+					page-break-inside: avoid;
+					break-inside: avoid;
+					-webkit-print-color-adjust: exact;
+					print-color-adjust: exact;
+				}
+				.callout-tip {
+					background: #f7f0dd !important;
+					color: #4a3a12 !important;
+				}
+				.callout-warn {
+					background: #fbf0e2 !important;
+					color: #5a3410 !important;
+				}
+				.callout strong {
+					color: #704d02 !important;
+				}
+				.tip-card {
+					background: #ffffff !important;
+					border-color: #d9cdb8 !important;
+					color: #333 !important;
+					page-break-inside: avoid;
+					break-inside: avoid;
+				}
+				.tip-card strong {
+					color: #704d02 !important;
+				}
+				.help-card {
+					background: #f7f0dd !important;
+					border-color: #d9cdb8 !important;
+					color: #1e1e1e !important;
+					page-break-inside: avoid;
+					break-inside: avoid;
+					-webkit-print-color-adjust: exact;
+					print-color-adjust: exact;
+				}
+				.help-card h3 {
+					color: #704d02 !important;
+				}
+				.help-card p {
+					color: #333 !important;
+				}
+				.help-link-item a,
+				.help-link-label {
+					color: #704d02 !important;
+				}
+				.help-card-tagline {
+					color: #666 !important;
+					border-top-color: #d9cdb8 !important;
+				}
+				.divider {
+					border-top-color: #d9cdb8 !important;
+				}
+				.subsection,
+				.section-heading,
+				.subsection-heading {
+					page-break-after: avoid;
+					break-after: avoid;
+				}
+				.tips-grid {
+					grid-template-columns: 1fr 1fr !important;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<nav class="sidebar" id="sidebar">
+			<div class="sidebar-logo">
+				<div class="sidebar-logo-title">Classic Log Homes, Inc.</div>
+				<div class="sidebar-logo-sub">Content Management Guide</div>
+			</div>
+			<div class="sidebar-section">
+				<div class="sidebar-section-label">Getting Started</div>
+				<a href="#logging-in" class="sidebar-link">Logging In</a>
+				<a href="#manage-content" class="sidebar-link">How Manage Content Works</a>
+				<a href="#drafts" class="sidebar-link">Drafts vs. Published</a>
+				<a href="#images" class="sidebar-link">Working with Images</a>
+				<a href="#publishing" class="sidebar-link">Publishing</a>
+			</div>
+			<div class="sidebar-section">
+				<div class="sidebar-section-label">Your Content</div>
+				<a href="#navigation" class="sidebar-link">Navigation</a>
+				<a href="#home-page" class="sidebar-link">Home Page</a>
+				<a href="#floor-plans" class="sidebar-link">Floor Plans</a>
+				<a href="#testimonials" class="sidebar-link">Testimonials</a>
+				<a href="#form-submissions" class="sidebar-link">Form Submissions</a>
+				<a href="#site-settings" class="sidebar-link">Site Settings</a>
+				<a href="#seo-settings" class="sidebar-link">SEO Settings</a>
+			</div>
+			<div class="sidebar-section">
+				<div class="sidebar-section-label">Reference</div>
+				<a href="#quick-tips" class="sidebar-link">Quick Tips</a>
+				<a href="#need-help" class="sidebar-link">Need Help?</a>
+			</div>
+			<div class="sidebar-footer">
+				Powered by
+				<a href="https://latzwebdesign.com" target="_blank">Latz Web Design</a><br />
+				No fluff. Just results.
+			</div>
+		</nav>
+
+		<div class="sidebar-overlay" id="overlay"></div>
+
+		<div class="main">
+			<header class="page-header">
+				<!-- CLIENT LOGO: save client logo as /public/logo.png -->
+				<img
+					src="./logo.png"
+					alt="Classic Log Homes, Inc."
+					class="header-logo"
+					onerror="this.style.display='none'"
+				/>
+				<div class="header-eyebrow">Content Management Guide</div>
+				<div class="header-title">Classic Log<br />Homes, Inc.</div>
+				<div class="header-sub">
+					Everything you need to edit and manage the content on your website
+					&mdash; no tech background required.
+				</div>
+				<div class="header-meta">
+					<div class="header-meta-item">
+						<strong>Website:</strong>
+						<a href="https://classicloghomes.biz" target="_blank"
+							>classicloghomes.biz</a
+						>
+					</div>
+					<div class="header-meta-item">
+						<strong>Studio:</strong>
+						<a href="https://classic-log-homes.sanity.studio" target="_blank"
+							>classic-log-homes.sanity.studio</a
+						>
+					</div>
+				</div>
+				<button class="print-btn" onclick="window.print()">
+					<svg
+						width="14"
+						height="14"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					>
+						<polyline points="6 9 6 2 18 2 18 9" />
+						<path
+							d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"
+						/>
+						<rect x="6" y="14" width="12" height="8" />
+					</svg>
+					Print / Save PDF
+				</button>
+			</header>
+
+			<div class="content">
+				<!-- ══════════ GETTING STARTED ══════════ -->
+				<div class="doc-section" id="getting-started">
+					<div class="section-badge">Getting Started</div>
+					<h2 class="section-heading">Getting Started</h2>
+				</div>
+
+				<div class="subsection" id="logging-in">
+					<h3 class="subsection-heading">Logging In</h3>
+					<p class="doc-p">
+						Your content management system (the "Studio") is where you edit
+						everything on your website. To get in:
+					</p>
+					<ol class="steps">
+						<li>
+							<span
+								>Go to your Studio:
+								<a
+									href="https://classic-log-homes.sanity.studio"
+									target="_blank"
+									>classic-log-homes.sanity.studio</a
+								></span
+							>
+						</li>
+						<li>
+							<span
+								>Log in with the account you were invited with (Google, GitHub,
+								or email/password).</span
+							>
+						</li>
+						<li>
+							<span
+								>You'll land on <strong>Manage Content</strong> &mdash; your list
+								of everything on the site, down the left side.</span
+							>
+						</li>
+					</ol>
+					<div class="callout callout-tip">
+						<span class="callout-icon">&#128161;</span>
+						<strong>Tip:</strong> Bookmark the Studio so you can jump back in
+						fast:
+						<a href="https://classic-log-homes.sanity.studio" target="_blank"
+							>classic-log-homes.sanity.studio</a
+						>
+					</div>
+				</div>
+
+				<div class="subsection" id="manage-content">
+					<h3 class="subsection-heading">How Manage Content Works</h3>
+					<p class="doc-p">
+						Everything happens in one place: <strong>Manage Content</strong>. The
+						left side lists your content &mdash; single pages like
+						<strong>Home Page</strong>, and collections like
+						<strong>Floor Plans</strong> and <strong>Testimonials</strong>. Open
+						a list, pick the item you want (or add a new one), fill in the
+						fields, and hit <strong>Publish</strong>. That's the whole loop.
+					</p>
+				</div>
+
+				<div class="subsection" id="drafts">
+					<h3 class="subsection-heading">Drafts vs. Published</h3>
+					<p class="doc-p">
+						Every change you make is saved as a draft automatically. Drafts are
+						<strong>not</strong> visible on the live website &mdash; only you can
+						see them in the Studio.
+					</p>
+					<p class="doc-p">
+						To make changes go live, click the <strong>Publish</strong> button at
+						the bottom right of the editor. Changes appear on your site within
+						about a minute.
+					</p>
+					<div class="callout callout-tip">
+						<span class="callout-icon">&#128161;</span>
+						<strong>Tip:</strong> You can't break the live site by editing. Your
+						drafts stay private until you hit Publish. Edit freely, then publish
+						when it looks right.
+					</div>
+				</div>
+
+				<div class="subsection" id="images">
+					<h3 class="subsection-heading">Working with Images</h3>
+					<p class="doc-p">To add or change any image:</p>
+					<ol class="steps">
+						<li><span>Click the image field.</span></li>
+						<li>
+							<span
+								>Click <strong>"Upload"</strong> to pick a file from your
+								computer, or drag and drop it in.</span
+							>
+						</li>
+						<li>
+							<span
+								>Set a <strong>hotspot</strong> &mdash; click the image and drag
+								the circle over the most important part (the cabin, the logs, the
+								face). This keeps the image cropping correctly on phones and
+								tablets.</span
+							>
+						</li>
+					</ol>
+					<ul class="bullets">
+						<li>Use JPG or PNG. The site converts and optimizes them automatically.</li>
+						<li>Real photos of Jeff's work beat stock every time.</li>
+						<li>Keep files reasonably sized (under ~4MB) so uploads stay quick.</li>
+						<li>Always set the hotspot on hero and plan photos.</li>
+					</ul>
+				</div>
+
+				<div class="subsection" id="publishing">
+					<h3 class="subsection-heading">Publishing</h3>
+					<ol class="steps">
+						<li><span>Make your edits.</span></li>
+						<li>
+							<span>Click <strong>"Publish"</strong> at the bottom right.</span>
+						</li>
+						<li>
+							<span
+								>Wait about a minute, then check the live site. If the change
+								doesn't show, do a hard refresh: <code>Ctrl+Shift+R</code> on PC
+								or <code>Cmd+Shift+R</code> on Mac.</span
+							>
+						</li>
+					</ol>
+				</div>
+
+				<hr class="divider" />
+
+				<!-- ══════════ YOUR CONTENT ══════════ -->
+				<div class="doc-section" id="your-content">
+					<div class="section-badge">Your Content</div>
+					<h2 class="section-heading">Your Content</h2>
+					<p class="section-intro">
+						Each item below matches one entry in your
+						<strong>Manage Content</strong> list, in the same order you see it in
+						the Studio. Single pages open straight to their fields; collections
+						(Floor Plans, Testimonials) open a list you can add to.
+					</p>
+				</div>
+
+				<!-- ── NAVIGATION ── -->
+				<div class="subsection" id="navigation">
+					<h3 class="subsection-heading">Navigation</h3>
+					<p class="doc-p">
+						The menu links at the top of the page. On the home page these
+						smooth-scroll down to each section. The last link
+						(<strong>Contact</strong>) shows as a highlighted button.
+					</p>
+					<table class="field-table">
+						<tr>
+							<td class="field-label">Navigation Links</td>
+							<td class="field-desc">
+								Each link has a <strong>Label</strong> (the visible text) plus a
+								<strong>URL</strong> and a <strong>CTA Button</strong> toggle.
+								Only the Label can be changed &mdash; the URL and button toggle
+								are locked to the page structure.<br />
+								<span class="field-lock">🔒 URL &amp; button toggle locked</span>
+							</td>
+						</tr>
+					</table>
+					<div class="callout callout-warn">
+						<span class="callout-icon">&#9888;&#65039;</span>
+						<strong>Note:</strong> Only edit the <strong>Label</strong> text.
+						The URLs are tied to sections on the page &mdash; changing them would
+						break the scroll links. Need a menu item added or reordered? Reach out
+						to Jordan.
+					</div>
+				</div>
+
+				<!-- ── HOME PAGE ── -->
+				<div class="subsection" id="home-page">
+					<h3 class="subsection-heading">Home Page</h3>
+					<p class="doc-p">
+						Your main page. It's split into tabs across the top of the editor
+						&mdash; Hero, Pillars, Overview, Featured Floor Plans, How It Works,
+						Support, Reviews, and Contact. Edit any tab, then Publish.
+					</p>
+
+					<div class="group-heading">① Hero</div>
+					<p class="doc-p">The full-width banner at the very top of the page.</p>
+					<table class="field-table">
+						<tr>
+							<td class="field-label">Headline</td>
+							<td class="field-desc">
+								The big title. Each sentence starts on a new line &mdash; add a
+								period to break to the next line. Currently "Wisconsin-made log
+								home packages. Made the right way."
+							</td>
+						</tr>
+						<tr>
+							<td class="field-label">Subheadline</td>
+							<td class="field-desc">
+								The supporting line below the headline.
+							</td>
+						</tr>
+						<tr>
+							<td class="field-label">Hero Images</td>
+							<td class="field-desc">
+								The background photos. Add 3&ndash;4 and the hero fades between
+								them; a single image just stays put. Set the hotspot on each.<br />
+								<span class="field-limit">1&ndash;8 images</span>
+							</td>
+						</tr>
+						<tr>
+							<td class="field-label">Primary CTA &rarr; Link Text</td>
+							<td class="field-desc">
+								Label on the main button, which jumps to Featured Floor Plans.
+								Currently "Explore floor plans."
+							</td>
+						</tr>
+						<tr>
+							<td class="field-label">Secondary CTA &rarr; Link Text</td>
+							<td class="field-desc">
+								Label on the second button, which jumps to the contact section.
+								Currently "Contact."
+							</td>
+						</tr>
+					</table>
+
+					<div class="group-heading">② Pillars</div>
+					<p class="doc-p">
+						The four short stat cards beneath the hero (22+, WI-based, USA,
+						Support).
+					</p>
+					<table class="field-table">
+						<tr>
+							<td class="field-label">Pillar Cards</td>
+							<td class="field-desc">
+								Each card has a <strong>Value</strong> (the big text, e.g. "22+")
+								and a <strong>Label</strong> (the small line under it). You must
+								have exactly four.<br />
+								<span class="field-limit">Exactly 4 cards</span>
+							</td>
+						</tr>
+					</table>
+
+					<div class="group-heading">③ What You're Buying</div>
+					<p class="doc-p">
+						The "We supply the package, you build the home" overview, with the
+						two lists.
+					</p>
+					<table class="field-table">
+						<tr>
+							<td class="field-label">Overline</td>
+							<td class="field-desc">Small label above the heading. Currently "Overview."</td>
+						</tr>
+						<tr>
+							<td class="field-label">Heading</td>
+							<td class="field-desc">The section title.</td>
+						</tr>
+						<tr>
+							<td class="field-label">Body</td>
+							<td class="field-desc">The paragraph under the heading.</td>
+						</tr>
+						<tr>
+							<td class="field-label">Left Column Heading</td>
+							<td class="field-desc">Currently "What we provide."</td>
+						</tr>
+						<tr>
+							<td class="field-label">What We Provide</td>
+							<td class="field-desc">
+								The bullet list on the left. Add, remove, or reorder items.
+							</td>
+						</tr>
+						<tr>
+							<td class="field-label">Right Column Heading</td>
+							<td class="field-desc">Currently "What you source."</td>
+						</tr>
+						<tr>
+							<td class="field-label">What You Source</td>
+							<td class="field-desc">The bullet list on the right.</td>
+						</tr>
+						<tr>
+							<td class="field-label">Photo</td>
+							<td class="field-desc">
+								The image beside the lists. Set the hotspot.
+							</td>
+						</tr>
+					</table>
+
+					<div class="group-heading">④ Featured Floor Plans</div>
+					<p class="doc-p">
+						The plan cards on the home page. This section
+						<strong>picks which plans to show</strong> &mdash; the plan content
+						itself lives in Floor Plans.
+					</p>
+					<table class="field-table">
+						<tr>
+							<td class="field-label">Overline</td>
+							<td class="field-desc">Currently "Floor Plans."</td>
+						</tr>
+						<tr>
+							<td class="field-label">Heading</td>
+							<td class="field-desc">Currently "Featured floor plans."</td>
+						</tr>
+						<tr>
+							<td class="field-label">Subheadline</td>
+							<td class="field-desc">The intro sentence under the heading.</td>
+						</tr>
+						<tr>
+							<td class="field-label">Plans to Feature</td>
+							<td class="field-desc">
+								Pick which floor plans appear here, and drag to set the order.
+								These link to your Floor Plan documents.
+							</td>
+						</tr>
+					</table>
+					<div class="callout callout-tip">
+						<span class="callout-icon">&#128161;</span>
+						<strong>Tip:</strong> To change a plan's photo, price, or specs, edit
+						it under <strong>Floor Plans</strong> &mdash; not here. This tab only
+						controls which plans show up and in what order.
+					</div>
+
+					<div class="group-heading">⑤ How It Works</div>
+					<p class="doc-p">
+						The numbered process steps, plus the "How We're Built" block below
+						them.
+					</p>
+					<table class="field-table">
+						<tr>
+							<td class="field-label">Overline</td>
+							<td class="field-desc">Currently "The Process."</td>
+						</tr>
+						<tr>
+							<td class="field-label">Heading</td>
+							<td class="field-desc">Currently "How it works."</td>
+						</tr>
+						<tr>
+							<td class="field-label">Steps</td>
+							<td class="field-desc">
+								Each step has a <strong>Step Title</strong> and a
+								<strong>Description</strong>. Numbering is automatic. Add,
+								remove, or reorder.
+							</td>
+						</tr>
+						<tr>
+							<td class="field-label">Mill Photo</td>
+							<td class="field-desc">
+								The mill-yard / stacked-logs photo. Set the hotspot.
+							</td>
+						</tr>
+						<tr>
+							<td class="field-label">How We're Built &mdash; Overline</td>
+							<td class="field-desc">Small label. Currently "How We're Built."</td>
+						</tr>
+						<tr>
+							<td class="field-label">How We're Built &mdash; Heading</td>
+							<td class="field-desc">
+								Currently "Wisconsin mills. Wisconsin craftsmen. One direct line."
+							</td>
+						</tr>
+						<tr>
+							<td class="field-label">How We're Built &mdash; Body</td>
+							<td class="field-desc">
+								Short paragraphs for that block.<br />
+								<span class="field-limit">1&ndash;3 paragraphs</span>
+							</td>
+						</tr>
+					</table>
+
+					<div class="group-heading">⑥ Support</div>
+					<p class="doc-p">
+						The post-delivery support section with the guidance list.
+					</p>
+					<table class="field-table">
+						<tr>
+							<td class="field-label">Overline</td>
+							<td class="field-desc">Currently "Post-Delivery Support."</td>
+						</tr>
+						<tr>
+							<td class="field-label">Heading</td>
+							<td class="field-desc">Currently "Support that starts at delivery."</td>
+						</tr>
+						<tr>
+							<td class="field-label">Intro</td>
+							<td class="field-desc">The paragraph under the heading.</td>
+						</tr>
+						<tr>
+							<td class="field-label">CTA &rarr; Link Text</td>
+							<td class="field-desc">
+								Button label that jumps to contact. Currently "Contact for
+								support."
+							</td>
+						</tr>
+						<tr>
+							<td class="field-label">Photo</td>
+							<td class="field-desc">The support image. Set the hotspot.</td>
+						</tr>
+						<tr>
+							<td class="field-label">Footnote</td>
+							<td class="field-desc">
+								The small line under the photo (e.g. the "years across every
+								phase of construction" note).
+							</td>
+						</tr>
+						<tr>
+							<td class="field-label">Guidance Items</td>
+							<td class="field-desc">
+								The list of what Jeff helps with. Each has a
+								<strong>Title</strong> and a short <strong>Description</strong>.
+							</td>
+						</tr>
+					</table>
+
+					<div class="group-heading">⑦ Reviews</div>
+					<p class="doc-p">
+						The customer reviews section. Like Featured Floor Plans, this
+						<strong>picks which reviews to show</strong> &mdash; the review text
+						itself lives in Testimonials.
+					</p>
+					<table class="field-table">
+						<tr>
+							<td class="field-label">Overline</td>
+							<td class="field-desc">Currently "Customer Feedback."</td>
+						</tr>
+						<tr>
+							<td class="field-label">Heading</td>
+							<td class="field-desc">Currently "What our clients say."</td>
+						</tr>
+						<tr>
+							<td class="field-label">Reviews to Feature</td>
+							<td class="field-desc">
+								Pick which reviews appear here, and drag to set the order. These
+								link to your Testimonial documents.
+							</td>
+						</tr>
+						<tr>
+							<td class="field-label">Google Reviews Link</td>
+							<td class="field-desc">
+								The URL behind "Read more Google reviews." Must start with
+								<code>https://</code>.
+							</td>
+						</tr>
+					</table>
+					<div class="callout callout-tip">
+						<span class="callout-icon">&#128161;</span>
+						<strong>Tip:</strong> To fix a typo in a review, edit it under
+						<strong>Testimonials</strong>. Here you just choose which reviews are
+						featured.
+					</div>
+
+					<div class="group-heading">⑧ Contact</div>
+					<p class="doc-p">The "Let's Build" section with the contact form.</p>
+					<table class="field-table">
+						<tr>
+							<td class="field-label">Overline</td>
+							<td class="field-desc">Currently "Let's Build."</td>
+						</tr>
+						<tr>
+							<td class="field-label">Heading</td>
+							<td class="field-desc">Currently "Ready to build your dream cabin or home?"</td>
+						</tr>
+						<tr>
+							<td class="field-label">Body</td>
+							<td class="field-desc">The paragraph above the phone number and form.</td>
+						</tr>
+						<tr>
+							<td class="field-label">Phone Number</td>
+							<td class="field-desc">
+								Shows as click-to-call / text on mobile. Currently "715-887-2550."
+							</td>
+						</tr>
+						<tr>
+							<td class="field-label">Availability</td>
+							<td class="field-desc">
+								The hours line (e.g. "Available 7am&ndash;9pm CST, 7 days a
+								week").
+							</td>
+						</tr>
+						<tr>
+							<td class="field-label">Form Heading</td>
+							<td class="field-desc">Small heading above the form. Currently "Send a message."</td>
+						</tr>
+						<tr>
+							<td class="field-label">Form Note</td>
+							<td class="field-desc">The small note near the form (e.g. response time).</td>
+						</tr>
+					</table>
+
+					<div class="group-heading">🔍 SEO</div>
+					<p class="doc-p">
+						Optional per-page search settings. Leave blank to use the site-wide
+						defaults from <strong>SEO Settings</strong>.
+					</p>
+					<table class="field-table">
+						<tr>
+							<td class="field-label">Page Title</td>
+							<td class="field-desc">
+								The browser-tab / search title.<br />
+								<span class="field-limit">50&ndash;60 characters</span>
+							</td>
+						</tr>
+						<tr>
+							<td class="field-label">Meta Description</td>
+							<td class="field-desc">
+								The blurb under the title in search results.<br />
+								<span class="field-limit">150&ndash;160 characters</span>
+							</td>
+						</tr>
+						<tr>
+							<td class="field-label">Keywords</td>
+							<td class="field-desc">Page-specific keywords. Optional.</td>
+						</tr>
+						<tr>
+							<td class="field-label">Social Share Image</td>
+							<td class="field-desc">
+								The image shown when the page is shared on social media.<br />
+								<span class="field-limit">1200 &times; 630 px</span>
+							</td>
+						</tr>
+						<tr>
+							<td class="field-label">Hide from search engines</td>
+							<td class="field-desc">
+								Leave off for normal pages. Only turn on for pages you want kept
+								out of Google.
+							</td>
+						</tr>
+					</table>
+				</div>
+
+				<!-- ── FLOOR PLANS ── -->
+				<div class="subsection" id="floor-plans">
+					<h3 class="subsection-heading">Floor Plans</h3>
+					<p class="doc-p">
+						Your collection of plan pages. Each floor plan is its own document
+						with a detail page at <code>/floor-plans/[slug]</code>. Open
+						<strong>Floor Plans</strong> to edit an existing plan, or use the
+						button below to jump straight to the list and add a new one.
+					</p>
+					<a
+						class="studio-link"
+						href="https://classic-log-homes.sanity.studio/structure/floor-plans"
+						target="_blank"
+					>
+						<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+							<line x1="12" y1="5" x2="12" y2="19" />
+							<line x1="5" y1="12" x2="19" y2="12" />
+						</svg>
+						Open Floor Plans &rarr; add a new plan
+					</a>
+					<p class="doc-p">
+						The plan editor is organized into tabs: Basics, Specs, About &amp;
+						Features, Images, Package, Extras, and SEO.
+					</p>
+
+					<div class="group-heading">① Basics</div>
+					<table class="field-table">
+						<tr>
+							<td class="field-label">Plan Name</td>
+							<td class="field-desc">
+								The plan's name (e.g. "North Carolina").<br />
+								<span class="field-req">Required</span>
+							</td>
+						</tr>
+						<tr>
+							<td class="field-label">URL Slug</td>
+							<td class="field-desc">
+								The web address for the plan's page. This is
+								<strong>read-only</strong> once set &mdash; changing it would
+								break existing links.<br />
+								<span class="field-lock">🔒 Read-only &mdash; contact Jordan to rename</span>
+							</td>
+						</tr>
+						<tr>
+							<td class="field-label">Category</td>
+							<td class="field-desc">
+								Cabin, Home, or Lodge. Pick one.
+							</td>
+						</tr>
+						<tr>
+							<td class="field-label">Starting Price</td>
+							<td class="field-desc">
+								Optional free text, e.g. "From $20,000." Leave blank to hide the
+								price.
+							</td>
+						</tr>
+						<tr>
+							<td class="field-label">Short Description</td>
+							<td class="field-desc">
+								The one-liner shown on the plan card (home page grid and
+								listings).
+							</td>
+						</tr>
+						<tr>
+							<td class="field-label">Hero Intro</td>
+							<td class="field-desc">
+								A short tagline shown beside the plan name at the top of the
+								detail page.
+							</td>
+						</tr>
+					</table>
+
+					<div class="group-heading">② Specs</div>
+					<table class="field-table">
+						<tr>
+							<td class="field-label">Square Feet</td>
+							<td class="field-desc">Number.</td>
+						</tr>
+						<tr>
+							<td class="field-label">Bedrooms</td>
+							<td class="field-desc">Number.</td>
+						</tr>
+						<tr>
+							<td class="field-label">Bathrooms</td>
+							<td class="field-desc">Number.</td>
+						</tr>
+						<tr>
+							<td class="field-label">Stories</td>
+							<td class="field-desc">Text, so you can enter values like "1.5."</td>
+						</tr>
+						<tr>
+							<td class="field-label">Footprint</td>
+							<td class="field-desc">The building footprint, e.g. 24' &times; 30'.</td>
+						</tr>
+						<tr>
+							<td class="field-label">Wall Height</td>
+							<td class="field-desc">Optional, e.g. 9'.</td>
+						</tr>
+					</table>
+
+					<div class="group-heading">④ About &amp; Features</div>
+					<table class="field-table">
+						<tr>
+							<td class="field-label">About This Plan</td>
+							<td class="field-desc">
+								A few paragraphs describing the plan. Keep the honest "collect
+								local bids" caveat on every plan.<br />
+								<span class="field-limit">2&ndash;4 paragraphs</span>
+							</td>
+						</tr>
+						<tr>
+							<td class="field-label">Key Features</td>
+							<td class="field-desc">
+								Quick, scannable feature bullets.<br />
+								<span class="field-limit">4&ndash;8 recommended (max 12)</span>
+							</td>
+						</tr>
+					</table>
+
+					<div class="group-heading">③ Images</div>
+					<table class="field-table">
+						<tr>
+							<td class="field-label">Card Image</td>
+							<td class="field-desc">
+								The thumbnail on plan cards (home page grid, listings). Usually a
+								clean rendering. If left empty, the Hero Image is used. Set the
+								hotspot.
+							</td>
+						</tr>
+						<tr>
+							<td class="field-label">Hero Image</td>
+							<td class="field-desc">
+								The large image at the top of the plan's detail page &mdash;
+								often a real built photo. Set the hotspot.
+							</td>
+						</tr>
+						<tr>
+							<td class="field-label">Design Renderings</td>
+							<td class="field-desc">
+								A gallery of 3D exterior views. Swap AI renderings for real photos
+								over time.
+							</td>
+						</tr>
+						<tr>
+							<td class="field-label">Floor Plan Drawings</td>
+							<td class="field-desc">
+								The blueprint drawings. Each has a <strong>Drawing</strong> image
+								and a <strong>Caption</strong> (e.g. "Main Floor Plan").
+							</td>
+						</tr>
+					</table>
+
+					<div class="group-heading">⑤ Package</div>
+					<p class="doc-p">
+						These come pre-filled with the common defaults. Only edit them where
+						this specific plan differs.
+					</p>
+					<table class="field-table">
+						<tr>
+							<td class="field-label">Included in Package</td>
+							<td class="field-desc">What ships with this plan's package.</td>
+						</tr>
+						<tr>
+							<td class="field-label">Not Included (Source Locally)</td>
+							<td class="field-desc">What the buyer sources on their own.</td>
+						</tr>
+						<tr>
+							<td class="field-label">Package Footnote</td>
+							<td class="field-desc">The fine-print note under the package lists.</td>
+						</tr>
+					</table>
+
+					<div class="group-heading">⑥ Extras</div>
+					<table class="field-table">
+						<tr>
+							<td class="field-label">3D Walkaround URL</td>
+							<td class="field-desc">
+								Optional. Paste a 3D walkaround link. If left empty, that section
+								is simply hidden on this plan.
+							</td>
+						</tr>
+					</table>
+
+					<div class="group-heading">🔍 SEO</div>
+					<p class="doc-p">
+						Same optional per-page search settings as the Home Page &mdash; Page
+						Title, Meta Description, Keywords, Social Share Image, and the
+						hide-from-search toggle. Leave blank to use the site defaults.
+					</p>
+
+					<div class="callout callout-tip">
+						<span class="callout-icon">&#128161;</span>
+						<strong>Tip:</strong> To add a plan to the home page after creating
+						it, open <strong>Home Page &rarr; Featured Floor Plans</strong> and
+						add it to "Plans to Feature."
+					</div>
+					<div class="callout callout-warn">
+						<span class="callout-icon">&#9888;&#65039;</span>
+						<strong>Note:</strong> A plan's URL slug can't be changed after it's
+						set &mdash; live links and search rankings depend on it. If a plan
+						truly needs renaming, email Jordan and he'll handle the redirect.
+					</div>
+				</div>
+
+				<!-- ── TESTIMONIALS ── -->
+				<div class="subsection" id="testimonials">
+					<h3 class="subsection-heading">Testimonials</h3>
+					<p class="doc-p">
+						Your collection of customer reviews. Add reviews here, then feature
+						the ones you want under <strong>Home Page &rarr; Reviews</strong>.
+					</p>
+					<a
+						class="studio-link"
+						href="https://classic-log-homes.sanity.studio/structure/testimonials"
+						target="_blank"
+					>
+						<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+							<line x1="12" y1="5" x2="12" y2="19" />
+							<line x1="5" y1="12" x2="19" y2="12" />
+						</svg>
+						Open Testimonials &rarr; add a new review
+					</a>
+					<table class="field-table">
+						<tr>
+							<td class="field-label">Testimonial</td>
+							<td class="field-desc">
+								The quote itself &mdash; a short 2&ndash;4 sentence review.<br />
+								<span class="field-req">Required</span>
+							</td>
+						</tr>
+						<tr>
+							<td class="field-label">Customer Name</td>
+							<td class="field-desc">
+								Who said it.<br />
+								<span class="field-req">Required</span>
+							</td>
+						</tr>
+						<tr>
+							<td class="field-label">Project / Location</td>
+							<td class="field-desc">
+								Optional context, e.g. their town or project type.
+							</td>
+						</tr>
+						<tr>
+							<td class="field-label">Star Rating</td>
+							<td class="field-desc">
+								1 to 5 stars. Defaults to 5.
+							</td>
+						</tr>
+						<tr>
+							<td class="field-label">Voice</td>
+							<td class="field-desc">
+								Owner-Builder, Contractor/Builder, or Other. Helps you keep a mix
+								of voices when choosing which to feature.
+							</td>
+						</tr>
+						<tr>
+							<td class="field-label">Display Order</td>
+							<td class="field-desc">
+								Lower numbers appear first in the Studio list. Handy for keeping
+								your favorites near the top.
+							</td>
+						</tr>
+					</table>
+					<div class="callout callout-tip">
+						<span class="callout-icon">&#128161;</span>
+						<strong>Tip:</strong> Adding a review here doesn't automatically put
+						it on the site. Once it's saved, feature it under
+						<strong>Home Page &rarr; Reviews &rarr; Reviews to Feature</strong>.
+					</div>
+				</div>
+
+				<!-- ── FORM SUBMISSIONS ── -->
+				<div class="subsection" id="form-submissions">
+					<h3 class="subsection-heading">Form Submissions</h3>
+					<p class="doc-p">
+						Every message sent through the website's contact form lands here,
+						newest first. These are <strong>read-only</strong> &mdash; the real
+						notifications come straight to your email. This list is just a backup
+						record you can browse.
+					</p>
+					<table class="field-table">
+						<tr>
+							<td class="field-label">What each entry shows</td>
+							<td class="field-desc">
+								Name, Email, Phone Number, the Floor Plan they selected, their
+								Message, Project Type (owner-builder / contractor / not sure), and
+								the date &amp; time it was sent. Suspected bot submissions are
+								flagged with a 🚫 so you can ignore them.
+							</td>
+						</tr>
+					</table>
+					<div class="callout callout-tip">
+						<span class="callout-icon">&#128272;</span>
+						<strong>About the 🚫 flag (spam protection):</strong> The form has a
+						hidden "trap" field that real visitors never see. People leave it
+						blank; automated spam bots fill in every field, so they fall right
+						into it. When that happens, the entry is quietly logged here with a
+						🚫 and <strong>no email is sent to you</strong> &mdash; so your inbox
+						only ever gets real inquiries. You don't need to do anything with the
+						🚫 entries; they're just kept for the record. If a real message ever
+						looks flagged by mistake, let Jordan know.
+					</div>
+					<div class="callout callout-warn">
+						<span class="callout-icon">&#9888;&#65039;</span>
+						<strong>Note:</strong> Submissions can't be edited or deleted from the
+						Studio. Manage real inquiries from the email notifications you receive.
+					</div>
+				</div>
+
+				<!-- ── SITE SETTINGS ── -->
+				<div class="subsection" id="site-settings">
+					<h3 class="subsection-heading">Site Settings</h3>
+					<p class="doc-p">
+						Site-wide details used in the footer, the detail-page sidebar, and
+						your automatic emails. Organized into tabs: Footer, Contact, Free
+						Guides, and Email Branding.
+					</p>
+
+					<div class="group-heading">① Footer</div>
+					<table class="field-table">
+						<tr>
+							<td class="field-label">Tagline</td>
+							<td class="field-desc">
+								The short paragraph in the footer describing the business.
+							</td>
+						</tr>
+						<tr>
+							<td class="field-label">Copyright Line</td>
+							<td class="field-desc">
+								The copyright text, e.g. "© 2026 Classic Log Homes, Inc."
+							</td>
+						</tr>
+					</table>
+
+					<div class="group-heading">② Contact</div>
+					<table class="field-table">
+						<tr>
+							<td class="field-label">Phone Number</td>
+							<td class="field-desc">Business phone shown in the footer and sidebar.</td>
+						</tr>
+						<tr>
+							<td class="field-label">Email</td>
+							<td class="field-desc">Business email address.</td>
+						</tr>
+						<tr>
+							<td class="field-label">Address</td>
+							<td class="field-desc">Your mailing / showroom address.</td>
+						</tr>
+						<tr>
+							<td class="field-label">Showroom Note</td>
+							<td class="field-desc">Short note, e.g. "Showroom by appointment."</td>
+						</tr>
+					</table>
+
+					<div class="group-heading">③ Free Guides</div>
+					<table class="field-table">
+						<tr>
+							<td class="field-label">Free Guides</td>
+							<td class="field-desc">
+								A shared list of downloadable PDFs shown in the sidebar on every
+								floor plan page. Each has a <strong>Guide Title</strong>, the
+								<strong>PDF</strong> file, and a <strong>Show in Footer</strong>
+								toggle &mdash; turn that on to also add a download link for it in
+								the site footer.
+							</td>
+						</tr>
+					</table>
+
+					<div class="group-heading">④ Email Branding</div>
+					<table class="field-table">
+						<tr>
+							<td class="field-label">Logo for Auto Emails</td>
+							<td class="field-desc">
+								Shown at the top of the contact-form notification email and the
+								auto-response sent to leads. Use a wide logo on a white or
+								transparent background &mdash; it displays around 180px wide.
+							</td>
+						</tr>
+					</table>
+				</div>
+
+				<!-- ── SEO SETTINGS ── -->
+				<div class="subsection" id="seo-settings">
+					<h3 class="subsection-heading">SEO Settings</h3>
+					<p class="doc-p">
+						The site-wide search and social defaults. Most of this is set at
+						launch and rarely needs touching. Anything a page doesn't set on its
+						own falls back to what's here.
+					</p>
+					<table class="field-table">
+						<tr>
+							<td class="field-label">Site Name</td>
+							<td class="field-desc">Business name as it appears in the browser tab title.</td>
+						</tr>
+						<tr>
+							<td class="field-label">Site URL</td>
+							<td class="field-desc">Your production URL, with <code>https://</code>.</td>
+						</tr>
+						<tr>
+							<td class="field-label">Title Template</td>
+							<td class="field-desc">
+								How page titles are formatted. <code>%s</code> is the page's own
+								title, e.g. "%s | Classic Log Homes."
+							</td>
+						</tr>
+						<tr>
+							<td class="field-label">Default Title</td>
+							<td class="field-desc">
+								Homepage title and the fallback for any page without its own.<br />
+								<span class="field-limit">50&ndash;60 characters</span>
+							</td>
+						</tr>
+						<tr>
+							<td class="field-label">Default Description</td>
+							<td class="field-desc">
+								Site-wide fallback search blurb.<br />
+								<span class="field-limit">150&ndash;160 characters</span>
+							</td>
+						</tr>
+						<tr>
+							<td class="field-label">Keywords</td>
+							<td class="field-desc">
+								Primary site keywords.<br />
+								<span class="field-limit">5&ndash;10 is plenty</span>
+							</td>
+						</tr>
+						<tr>
+							<td class="field-label">Default OG Image</td>
+							<td class="field-desc">
+								Default social-share image, used site-wide unless a page overrides
+								it.<br />
+								<span class="field-limit">1200 &times; 630 px</span>
+							</td>
+						</tr>
+						<tr>
+							<td class="field-label">Twitter / X Handle</td>
+							<td class="field-desc">Include the @. Leave blank if there's no account.</td>
+						</tr>
+						<tr>
+							<td class="field-label">Schema Type</td>
+							<td class="field-desc">
+								The business category search engines use. For Classic Log Homes
+								this is typically "HomeAndConstructionBusiness."
+							</td>
+						</tr>
+						<tr>
+							<td class="field-label">Phone / Email</td>
+							<td class="field-desc">Business contact details used in search data.</td>
+						</tr>
+						<tr>
+							<td class="field-label">Address</td>
+							<td class="field-desc">Street, City, State, and ZIP.</td>
+						</tr>
+						<tr>
+							<td class="field-label">Service Areas</td>
+							<td class="field-desc">Cities or counties served.</td>
+						</tr>
+						<tr>
+							<td class="field-label">Price Range</td>
+							<td class="field-desc">A rough $ to $$$$ indicator for search listings.</td>
+						</tr>
+					</table>
+					<div class="callout callout-warn">
+						<span class="callout-icon">&#9888;&#65039;</span>
+						<strong>Note:</strong> These settings affect how the whole site shows
+						up in Google. If you're not sure about a change, check with Jordan
+						first.
+					</div>
+				</div>
+
+				<hr class="divider" />
+
+				<!-- ══════════ QUICK TIPS ══════════ -->
+				<div class="doc-section" id="quick-tips">
+					<div class="section-badge">Reference</div>
+					<h2 class="section-heading">Quick Tips</h2>
+					<div class="tips-grid">
+						<div class="tip-card">
+							<span class="tip-card-icon">&#9989;</span
+							><strong>Always publish</strong>Drafts stay private. Nothing goes
+							live until you hit Publish.
+						</div>
+						<div class="tip-card">
+							<span class="tip-card-icon">&#127919;</span
+							><strong>Set hotspots</strong>On every image. Drag the circle over
+							the subject so it crops right on phones.
+						</div>
+						<div class="tip-card">
+							<span class="tip-card-icon">&#128279;</span
+							><strong>Pick, don't retype</strong>Featured plans &amp; reviews
+							pull from Floor Plans / Testimonials. Edit the source, not the home
+							page.
+						</div>
+						<div class="tip-card">
+							<span class="tip-card-icon">&#128274;</span
+							><strong>Slugs are locked</strong>Plan URLs don't change. Need a
+							rename? Email Jordan.
+						</div>
+						<div class="tip-card">
+							<span class="tip-card-icon">&#9201;&#65039;</span
+							><strong>Give it a minute</strong>Changes take ~1 minute to appear.
+							Hard refresh if needed: <code>Ctrl+Shift+R</code> /
+							<code>Cmd+Shift+R</code>.
+						</div>
+						<div class="tip-card">
+							<span class="tip-card-icon">&#9986;&#65039;</span
+							><strong>Keep text tight</strong>Short, clear copy converts. Say it
+							and move on.
+						</div>
+						<div class="tip-card">
+							<span class="tip-card-icon">&#128241;</span
+							><strong>Yellow vs. red</strong>Yellow length hints still publish.
+							Red errors must be fixed first.
+						</div>
+						<div class="tip-card">
+							<span class="tip-card-icon">&#129517;</span
+							><strong>Only edit nav labels</strong>In Navigation, change the
+							Label text only &mdash; the URLs are locked to the page.
+						</div>
+					</div>
+				</div>
+
+				<hr class="divider" />
+
+				<!-- ══════════ NEED HELP ══════════ -->
+				<div class="doc-section" id="need-help">
+					<h2 class="section-heading">Need Help?</h2>
+					<p class="section-intro">
+						If you get stuck or something doesn't look right, reach out directly.
+						No bots, no tickets.
+					</p>
+					<div class="help-card">
+						<h3>You talk to me directly.</h3>
+						<p>
+							If something looks off or you're not sure how to do something, just
+							send me a message. I'll get back to you fast.
+						</p>
+						<div class="help-links">
+							<div class="help-link-item">
+								<span class="help-link-label">Email</span
+								><a href="mailto:jordan@latzwebdesign.com"
+									>jordan@latzwebdesign.com</a
+								>
+							</div>
+							<div class="help-link-item">
+								<span class="help-link-label">Website</span
+								><a href="https://latzwebdesign.com" target="_blank"
+									>latzwebdesign.com</a
+								>
+							</div>
+						</div>
+						<div class="help-card-tagline">
+							Latz Web Design &nbsp;&bull;&nbsp; No fluff. Just results.
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+			&#9776;
+		</button>
+
+		<script>
+			var sidebar = document.getElementById('sidebar');
+			var overlay = document.getElementById('overlay');
+			var toggle = document.getElementById('mobileToggle');
+
+			toggle.addEventListener('click', function () {
+				sidebar.classList.toggle('open');
+				overlay.classList.toggle('visible');
+				toggle.textContent = sidebar.classList.contains('open') ? '✕' : '☰';
+			});
+
+			overlay.addEventListener('click', function () {
+				sidebar.classList.remove('open');
+				overlay.classList.remove('visible');
+				toggle.textContent = '☰';
+			});
+
+			var sections = document.querySelectorAll('[id]');
+			var links = document.querySelectorAll('.sidebar-link');
+
+			var observer = new IntersectionObserver(
+				function (entries) {
+					entries.forEach(function (entry) {
+						if (entry.isIntersecting) {
+							var id = entry.target.id;
+							links.forEach(function (link) {
+								link.classList.toggle(
+									'active',
+									link.getAttribute('href') === '#' + id,
+								);
+							});
+						}
+					});
+				},
+				{ rootMargin: '-20% 0px -70% 0px' },
+			);
+
+			sections.forEach(function (s) {
+				observer.observe(s);
+			});
+
+			links.forEach(function (link) {
+				link.addEventListener('click', function () {
+					sidebar.classList.remove('open');
+					overlay.classList.remove('visible');
+					toggle.textContent = '☰';
+				});
+			});
+		</script>
+	</body>
+</html>
