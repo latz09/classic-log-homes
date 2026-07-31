@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import SanityImage from '@/components/ui/SanityImage';
 import { getSanityImageUrl, IMAGE_PRESETS } from '@/utils/cms/getSanityImageUrl';
 import Lightbox from 'yet-another-react-lightbox';
@@ -26,6 +26,14 @@ function rgba(hex, a) {
 	return `rgba(${r}, ${g}, ${b}, ${a})`;
 }
 
+// How much accumulated wheel movement triggers a slide change.
+// Higher = requires a more deliberate scroll before it advances.
+const WHEEL_THRESHOLD = 40;
+// Minimum gap between slide changes, so one scroll gesture doesn't
+// fire through several photos at once (trackpads send dozens of
+// wheel events per swipe).
+const WHEEL_COOLDOWN_MS = 400;
+
 const HoverHint = () => (
 	<span className='absolute inset-0 flex items-center justify-center bg-black/0 transition-colors duration-300 group-hover:bg-black/60'>
 		<svg
@@ -45,6 +53,12 @@ const HoverHint = () => (
 const MainGallery = ({ heroImage, additionalImages = [] }) => {
 	const [activeIndex, setActiveIndex] = useState(-1); // -1 = closed
 
+	// Controller ref gives us next()/prev(). Zoom ref tells us the current
+	// zoom level so we know whether scroll should navigate or pan.
+	const controllerRef = useRef(null);
+	const zoomRef = useRef(null);
+	const wheelLocked = useRef(false);
+
 	const gridImages = additionalImages.slice(0, 4);
 	const allImages = [heroImage, ...additionalImages].filter(Boolean);
 	const totalCount = allImages.length;
@@ -56,6 +70,43 @@ const MainGallery = ({ heroImage, additionalImages = [] }) => {
 		src: getSanityImageUrl(image, { ...IMAGE_PRESETS.lightbox, fit: 'max' }),
 		alt: image?.alt || '',
 	}));
+
+	// Scroll-wheel navigation while the lightbox is open. Skips navigation
+	// when the current image is zoomed in, since the Zoom plugin already
+	// uses the wheel to pan around a zoomed photo — this just lets that
+	// behavior win instead of fighting it.
+	useEffect(() => {
+		if (activeIndex < 0) return undefined;
+
+		const handleWheel = (e) => {
+			const currentZoom = zoomRef.current?.zoom ?? 1;
+			if (currentZoom > 1) return; // let Zoom plugin handle panning
+
+			if (wheelLocked.current) return;
+
+			const delta = Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+			if (Math.abs(delta) < WHEEL_THRESHOLD) return;
+
+			e.preventDefault();
+			wheelLocked.current = true;
+
+			if (delta > 0) {
+				controllerRef.current?.next();
+			} else {
+				controllerRef.current?.prev();
+			}
+
+			setTimeout(() => {
+				wheelLocked.current = false;
+			}, WHEEL_COOLDOWN_MS);
+		};
+
+		// The lightbox already locks body scroll while open (NoScroll module),
+		// so listening on window is safe and simpler than reaching into the
+		// portal DOM for a container ref.
+		window.addEventListener('wheel', handleWheel, { passive: false });
+		return () => window.removeEventListener('wheel', handleWheel);
+	}, [activeIndex]);
 
 	return (
 		<>
@@ -113,6 +164,8 @@ const MainGallery = ({ heroImage, additionalImages = [] }) => {
 				index={activeIndex}
 				slides={slides}
 				plugins={[Zoom, Thumbnails]}
+				controller={{ ref: controllerRef }}
+				zoom={{ ref: zoomRef }}
 				animation={{ fade: 500, swipe: 600 }}
 				styles={{
 					root: {
