@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import SanityImage from '@/components/ui/SanityImage';
 import HeadingWithOverline from '@/components/ui/HeadingWithOverline';
 import {
@@ -57,11 +57,25 @@ function rgba(hex, a) {
 	return `rgba(${r}, ${g}, ${b}, ${a})`;
 }
 
+// How much accumulated wheel movement triggers a slide change.
+// Higher = requires a more deliberate scroll before it advances.
+const WHEEL_THRESHOLD = 40;
+// Minimum gap between slide changes, so one scroll gesture doesn't
+// fire through several photos at once (trackpads send dozens of
+// wheel events per swipe).
+const WHEEL_COOLDOWN_MS = 400;
+
 const BLUEPRINT_SIZE = { width: 800, height: 600, quality: 90 };
 const VISIBLE_COUNT = 3; // one row in the 3-col grid — bump to 6 for two rows
 
 const BluePrints = ({ data = [] }) => {
 	const [activeIndex, setActiveIndex] = useState(-1); // -1 = closed
+
+	// Controller ref gives us next()/prev(). Zoom ref tells us the current
+	// zoom level so we know whether scroll should navigate or pan.
+	const controllerRef = useRef(null);
+	const zoomRef = useRef(null);
+	const wheelLocked = useRef(false);
 
 	const visible = data.slice(0, VISIBLE_COUNT);
 	const totalCount = data.length;
@@ -78,6 +92,44 @@ const BluePrints = ({ data = [] }) => {
 		alt: item.image?.alt || item.caption || '',
 		description: item.caption || undefined, // Captions plugin reads this
 	}));
+
+	// Scroll-wheel navigation while the lightbox is open. Skips navigation
+	// when the current image is zoomed in, since the Zoom plugin already
+	// uses the wheel to pan around a zoomed photo — this just lets that
+	// behavior win instead of fighting it.
+	useEffect(() => {
+		if (activeIndex < 0) return undefined;
+
+		const handleWheel = (e) => {
+			const currentZoom = zoomRef.current?.zoom ?? 1;
+			if (currentZoom > 1) return; // let Zoom plugin handle panning
+
+			if (wheelLocked.current) return;
+
+			const delta =
+				Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+			if (Math.abs(delta) < WHEEL_THRESHOLD) return;
+
+			e.preventDefault();
+			wheelLocked.current = true;
+
+			if (delta > 0) {
+				controllerRef.current?.next();
+			} else {
+				controllerRef.current?.prev();
+			}
+
+			setTimeout(() => {
+				wheelLocked.current = false;
+			}, WHEEL_COOLDOWN_MS);
+		};
+
+		// The lightbox already locks body scroll while open (NoScroll module),
+		// so listening on window is safe and simpler than reaching into the
+		// portal DOM for a container ref.
+		window.addEventListener('wheel', handleWheel, { passive: false });
+		return () => window.removeEventListener('wheel', handleWheel);
+	}, [activeIndex]);
 
 	return (
 		<>
@@ -130,6 +182,8 @@ const BluePrints = ({ data = [] }) => {
 				index={activeIndex}
 				slides={slides}
 				plugins={[Zoom, Thumbnails, Captions]}
+				controller={{ ref: controllerRef }}
+				zoom={{ ref: zoomRef }}
 				animation={{ fade: 500, swipe: 600 }}
 				captions={{ showToggle: true, descriptionTextAlign: 'center' }}
 				styles={{
@@ -151,9 +205,12 @@ const BluePrints = ({ data = [] }) => {
 						'--yarl__navigation_button_size': '40px',
 						'--yarl__navigation_button_border_radius': '9999px',
 						'--yarl__loading_indicator_color': COLORS.cream,
-							'--yarl__slide_captions_container_background': rgba(COLORS.charcoal, 0.0),
-		'--yarl__slide_description_color': COLORS.cream,
-		'--yarl__slide_title_color': COLORS.white,
+						'--yarl__slide_captions_container_background': rgba(
+							COLORS.charcoal,
+							0.0,
+						),
+						'--yarl__slide_description_color': COLORS.cream,
+						'--yarl__slide_title_color': COLORS.white,
 					},
 					navigationButton: {
 						backgroundColor: rgba(COLORS.charcoal, 0.18),
