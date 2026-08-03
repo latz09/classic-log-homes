@@ -27,21 +27,23 @@ const Footer = async () => {
 				</div>
 
 				<div className='lg:flex lg:gap-[25rem] pb-2 lg:pb-4 pt-1 lg:pt-0'>
-					<div className='ml-0 lg:ml-6 space-y-0.75 text-center lg:text-left'>
+					<div className='ml-0 lg:ml-6 space-y-0.75 text-center lg:text-left  '>
 						{contact?.phone && (
 							<p>
 								<a href={`tel:${contact.phone}`}>{contact.phone}</a>
 							</p>
 						)}
-						{contact?.email && (
+						{/* {contact?.email && (
 							<p>
 								<a href={`mailto:${contact.email}`}>{contact.email}</a>
 							</p>
-						)}
-						{contact?.address && (
+						)} */}
+						{/* {contact?.address && (
 							<p className='whitespace-pre-line'>{contact.address}</p>
+						)} */}
+						{contact?.showroomNote && (
+							<p className='whitespace-nowrap'>{contact.showroomNote}</p>
 						)}
-						{contact?.showroomNote && <p>{contact.showroomNote}</p>}
 					</div>
 					<div className='flex flex-col justify-between items-center lg:items-start text-center lg:text-left'>
 						<div className='flex gap-2 lg:gap-4 text-paragraph-lg font-[600] text-gold py-2 lg:py-0'>

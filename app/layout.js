@@ -33,6 +33,9 @@ export async function generateMetadata() {
 		description: seo.defaultDescription,
 		keywords: seo.keywords,
 		icons: { icon: '/favicon.ico' },
+			verification: {
+			google: 'Pes0p9sfUoCLPYoCYtpvIDgZdQo4RR65sdsbHR5HDVc',
+		},
 		openGraph: {
 			title: seo.defaultTitle,
 			description: seo.defaultDescription,
