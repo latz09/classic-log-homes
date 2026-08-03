@@ -166,7 +166,7 @@ const ContactForm = ({
 				</p>
 			)}
 			{success && (
-				<p className='mt-1 p-1 rounded border border-secondary text-caption text-primary bg-white'>
+				<p className='mt-1 p-1   text-caption '>
 					{success}
 				</p>
 			)}
