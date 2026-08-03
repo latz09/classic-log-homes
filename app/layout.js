@@ -9,7 +9,7 @@ import JsonLd from '@/components/seo/JsonLd';
 import NavigationContainer from '@/components/layout/navigation/NavigationContainer';
 import './globals.css';
 import { Manrope } from 'next/font/google';
-import DesignSystemBadge from '@/components/design/DesignSystemBadge';
+// import DesignSystemBadge from '@/components/design/DesignSystemBadge';
 
 
 const manrope = Manrope({
@@ -67,8 +67,8 @@ export default async function RootLayout({ children }) {
 				{children}
 				<Analytics />
 				<Footer />
-				<DesignSystemBadge />
-				{(await draftMode()).isEnabled && <VisualEditingClient />}
+				
+				{/* {(await draftMode()).isEnabled && <VisualEditingClient />} */}
 			</body>
 		</html>
 	);
