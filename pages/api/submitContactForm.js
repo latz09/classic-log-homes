@@ -100,9 +100,17 @@ export default async function handler(req, res) {
 		);
 	}
 
-	const emailPromise = Promise.all(emailsToSend).catch((error) => {
-		console.error('Error sending emails:', error);
-	});
+	const emailPromise = Promise.all(emailsToSend)
+		.then((results) => {
+			results.forEach((result, i) => {
+				if (result.error) {
+					console.error(`Email ${i} failed to send:`, result.error);
+				}
+			});
+		})
+		.catch((error) => {
+			console.error('Error sending emails:', error);
+		});
 
 	let sanityResult = null;
 	try {

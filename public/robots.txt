@@ -5,7 +5,7 @@ Disallow: /opengraph-image.jpg
 Disallow: /page-4
 
 # Host
-Host: https://www.latzwebdesign.com
+Host: https://www.classicloghomes.biz/
 
 # Sitemaps
-Sitemap: https://www.latzwebdesign.com/sitemap.xml
+Sitemap: https://www.classicloghomes.biz/sitemap.xml

@@ -38,9 +38,9 @@ const Footer = async () => {
 								<a href={`mailto:${contact.email}`}>{contact.email}</a>
 							</p>
 						)} */}
-						{/* {contact?.address && (
+						{contact?.address && (
 							<p className='whitespace-pre-line'>{contact.address}</p>
-						)} */}
+						)}
 						{contact?.showroomNote && (
 							<p className='whitespace-nowrap'>{contact.showroomNote}</p>
 						)}
