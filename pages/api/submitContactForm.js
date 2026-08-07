@@ -1,11 +1,33 @@
 // /pages/api/submitContactForm.js
 import { Resend } from 'resend';
+import imageUrlBuilder from '@sanity/image-url';
 import { sanityClient } from '@/utils/cms/sanityConnection';
 import { clientConfig } from '@/utils/email-configuration/client-config/clientConfig';
 import ClientNotificationEmail from '@/components/lib/emails/ClientNotificationEmail';
 import AutoResponseEmail from '@/components/lib/emails/AutoResponseEmail';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+const builder = imageUrlBuilder(sanityClient);
+
+async function getBranding() {
+	try {
+		const settings = await sanityClient.fetch(
+			`*[_type == "siteSettings"][0]{ emailLogo }`,
+		);
+
+		if (settings?.emailLogo) {
+			return {
+				...clientConfig.branding,
+				logoUrl: builder.image(settings.emailLogo).width(180).url(),
+			};
+		}
+	} catch (err) {
+		console.error('Error fetching email logo from Sanity:', err);
+	}
+
+	// No emailLogo set in the CMS, or the fetch failed — use the hardcoded default
+	return clientConfig.branding;
+}
 
 export default async function handler(req, res) {
 	if (req.method !== 'POST') {
@@ -63,6 +85,8 @@ export default async function handler(req, res) {
 		hour12: true,
 	}).format(new Date());
 
+	const branding = await getBranding();
+
 	const emailsToSend = [
 		resend.emails.send({
 			from: `${clientConfig.branding.name} Website <forms@mail.latzwebdesign.com>`,
@@ -71,7 +95,7 @@ export default async function handler(req, res) {
 			subject: clientConfig.messaging.clientEmailSubject(formData.name),
 			react: (
 				<ClientNotificationEmail
-					branding={clientConfig.branding}
+					branding={branding}
 					fields={clientConfig.formFields}
 					formData={formData}
 					timestamp={timestamp}
@@ -89,7 +113,7 @@ export default async function handler(req, res) {
 				subject: clientConfig.messaging.autoResponseSubject(formData.name),
 				react: (
 					<AutoResponseEmail
-						branding={clientConfig.branding}
+						branding={branding}
 						fields={clientConfig.formFields}
 						formData={formData}
 						messaging={clientConfig.messaging}
